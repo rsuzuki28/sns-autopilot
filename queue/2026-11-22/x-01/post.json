@@ -1,0 +1,22 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-22T07:30:00+09:00",
+  "theme": "最新キャンペーン速報（ANA特典航空券 減額マイル・締切11/24）",
+  "intent": "朝の軽めの速報。締切が近い減額マイルをリマインドし、特典航空券ガイド記事へ誘導",
+  "text": "結論から書きます。\nANAの減額マイルは11/24（火）23:59締切。\n\n東京⇔大阪など801〜1,000マイル区間は\n8,000→5,000マイル。\nウェブ限定です。\n\nブラックフライデー全体より短い5日間だけの企画。\n特典で旅したい人は締切前に空席確認を。",
+  "thread": [
+    "補足\n・変更は11/20〜11/24の手続きならキャンペーンのマイル数のまま。それ以外は通常との差額が必要\n・国内線は全路線、国際線は36路線が対象。国際線の締切は予約・発券する国の時間\n・利用者限定で10,000マイルが100名に当たる抽選も（登録は11/24まで）"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/domestic-flight-awards/",
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/international-flight-awards/",
+    "https://www.anahd.co.jp/group/pr/202611/20261116-2.html"
+  ],
+  "blog_url": "https://cc-lifeblog.com/ana-mile-award-ticket-guide-2026/",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}

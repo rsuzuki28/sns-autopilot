@@ -1,0 +1,28 @@
+{
+  "id": "x-04",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-22T21:30:00+09:00",
+  "theme": "保存版まとめ（11月末までのマイル系締切カレンダー）",
+  "intent": "夜の保存されやすい有益まとめ。ANA・JAL・アメックスの締切を日付順に整理し、保存とブックマークを狙う",
+  "text": "【保存版】11月末までのマイル締切カレンダー\n\n11/24 ANA減額マイル 23:59まで\n11/24 ANA BF特設に新企画（公開予定）\n11/25 JAL Mall マイル最大13倍 23:59まで\n11/28〜30 ANAにキュン BF版\n11/30 まとめて終了するもの→続く",
+  "thread": [
+    "11/30に終わるもの\n・ANA BLACK FRIDAY（23:59 日本時間）\n・JAL海外特典の減額（ホノルル片道14,000マイル〜）\n・JALアプリ新規DLで100万マイル抽選\n・アメックス→ANA上限なし移行\n\nJAL減額は予約の申込期限が別なので公式で確認を。",
+    "年明けまで続くもの\n・JALマイル→dポイント 8%増量（要エントリー、〜2027/1/5）。最大15%は抽選込み\n・どこかにマイル 候補が3択（〜12/1 9:59）\n・JAL羽田－ヘルシンキ ダブルマイル（〜2027/1/31）"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.anahd.co.jp/group/pr/202611/20261116-2.html",
+    "https://www.ana.co.jp/ja/jp/promotion/ana_kyun29/",
+    "https://news.yahoo.co.jp/articles/b67b8eee0a526e453c59b0c229c2fb3c414d2dd9",
+    "https://www.jal.co.jp/jp/ja/campaign/blackflyday/",
+    "https://ec.jal.co.jp/shop/e/ebfsale/",
+    "https://www.jal.co.jp/jp/ja/121campaign/2026/int-nov-discount/",
+    "https://www.jal.co.jp/ja-jp/campaign/mileage.html",
+    "https://www.jal.co.jp/jp/ja/campaign/inter/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
