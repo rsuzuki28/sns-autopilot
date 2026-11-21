@@ -58,16 +58,15 @@ cards:
   - id: marriott-amex-premium
     name: "Marriott Bonvoy アメリカン・エキスプレス・プレミアム・カード"
     holding: true
-    annual_fee: "49,500円（税込）"
+    annual_fee: "82,500円（税込）。2025年8月21日以降の新規・切り替えから適用（改定前は49,500円）。家族カードは1枚目無料、2枚目以降は1枚41,250円"
     perks:
-      - "年間150万円以上の決済で、50,000ポイントまでの無料宿泊特典"
+      - "無料宿泊特典（条件は2025年のリニューアルで変わっている可能性あり。公式で確認してから使う）"
       - "マリオット ゴールドエリート（条件達成でプラチナ）"
-    judgement: "年間150万円以上決済＋年1回以上マリオット系に泊まる人向け"
-    official_url: "https://www.americanexpress.com/ja-jp/"
-    blog_url: "https://cc-lifeblog.com/%e3%83%9e%e3%83%aa%e3%82%aa%e3%83%83%e3%83%88%e3%83%9c%e3%83%b3%e3%83%b4%e3%82%a9%e3%82%a4%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0%e3%81%af%e6%9c%ac-2/"
+    official_url: "https://www.americanexpress.com/ja-jp/benefits/marriott-bonvoy-premium-card/faq/"
+    blog_url: "https://cc-lifeblog.com/%e3%80%90%e3%83%9e%e3%83%aa%e3%82%aa%e3%83%83%e3%83%88%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9-vs-%e3%83%92%e3%83%ab%e3%83%88%e3%83%b3%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9-%e6%af%94/"
     affiliate_url: ""
-    checked: ""
-    notes: "⚠ ブログ内で年会費の記載が食い違っています（『マリオットボンヴォイアメックスプレミアムは本当に得か？』では49,500円、『マリオットアメックス vs ヒルトンアメックス』では82,500円）。公式で確認してください"
+    checked: "2026-11-21"   # 年会費のみRさん確認済み
+    notes: "ブログ『マリオットボンヴォイアメックスプレミアムは本当に得か？』は旧年会費49,500円のままなので、SNSからは誘導しない（記事修正後に解除）"
 
   - id: hilton-amex-premium
     name: "ヒルトン・オナーズ アメリカン・エキスプレス・プレミアム・カード"
@@ -88,7 +87,9 @@ cards:
   - id: amex-gold-business
     name: "アメリカン・エキスプレス・ビジネス・ゴールド・カード"
     holding: true
-    annual_fee: ""        # ブログに記載なし。公式サイトで確認して記入してください
+    annual_fee: "49,500円（税込）。2025年3月のリニューアルで改定（解説記事・報道ベース、公式ページ未確認）"
+    perks:
+      - "追加カード（付帯特典あり）は年会費13,200円（税込）"
     official_url: "https://www.americanexpress.com/ja-jp/"
     affiliate_url: ""
     checked: ""
