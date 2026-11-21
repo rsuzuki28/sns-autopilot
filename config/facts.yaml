@@ -1,29 +1,123 @@
 # ===== 確認済みファクト集 =====
-# AIは「年会費」「還元率」「マイル数」などの数字をここと当日のリサーチ結果からしか使いません。
-# リサーチにもここにもない数字はPull Requestで「要確認」と警告されます。
-# 公式サイトで確認した内容だけを書き、checked に確認日を入れてください。
+# AIは「年会費」「還元率」「マイル数」などの数字を、ここと当日のリサーチにあるものしか使いません。
+# ここにもリサーチにもない数字は、下書きのPull Requestで「要確認」と警告されます。
+#
+# ★ この内容は cc-lifeblog.com の記事から下書きしたものです（2026-11-21）。
+#   公式サイトで確認できたら checked に確認日を入れてください。
+#   checked が空のカードは「未確認」としてAIに渡されます。
 #
 # affiliate_url を入れたカードは、紹介するときにPR表記が自動で付きます。
 
 cards:
-  - id: sample-card
-    name: "（サンプル）〇〇マイルカード"
-    annual_fee: "初年度無料、2年目以降 2,200円（税込）"
-    earn_rate: "200円ごとに1マイル"
+  - id: ana-diners-premium
+    name: "ANAダイナース プレミアムカード"
+    holding: true          # Rさんが実際に保有（SFC）
+    annual_fee: "198,000円（税込）。2026年4月10日以降の口座振替分から（改定前は170,500円、+27,500円）。家族会員は無料"
+    earn_rate: "年間200万円の決済で約30,000マイル（ブログの試算）"
     perks:
-      - "国内主要空港のカードラウンジが無料"
-    official_url: "https://example.com/"
-    affiliate_url: ""          # ASPの紹介リンク（無ければ空欄）
-    checked: "2026-11-01"
-    notes: "これはサンプルです。実在するカード情報に書き換えてください。"
+      - "家族会員無料（2人で使えば1人あたり99,000円）"
+      - "空港ラウンジ・保険・コンシェルジュ"
+      - "タッチ決済対応のメタルカード"
+    judgement: "年間200万円以上集約できるなら値上げ後も合理性あり。100万円未満なら一般のANAダイナース（33,000円）やSFC（34,100円）への切り替えを検討"
+    official_url: "https://www.diners.co.jp/"
+    blog_url: "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+    affiliate_url: ""
+    checked: ""
 
-programs: []
-#  - id: ana-mileage-club
-#    name: "ANAマイレージクラブ"
-#    facts:
-#      - "..."
-#    official_url: "https://..."
-#    checked: "YYYY-MM-DD"
+  - id: ana-diners
+    name: "ANAダイナースカード（一般）"
+    holding: false
+    annual_fee: "33,000円（税込）。改定前は29,700円（+3,300円）"
+    official_url: "https://www.diners.co.jp/"
+    blog_url: "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+    affiliate_url: ""
+    checked: ""
 
-# 自由記述のメモ（交換ルート、過去のキャンペーン傾向など）
-notes: []
+  - id: ana-diners-sfc
+    name: "ANAダイナース スーパーフライヤーズカード"
+    holding: false
+    annual_fee: "34,100円（税込）。改定前は30,800円"
+    official_url: "https://www.diners.co.jp/"
+    blog_url: "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+    affiliate_url: ""
+    checked: ""
+
+  - id: diners-business-account
+    name: "ダイナースクラブ ビジネス・アカウントカード"
+    holding: true
+    annual_fee: "年間手数料 11,000円（税込）。本会員カードの年会費とは別。ANAダイナース プレミアムに付帯させると合計209,000円"
+    perks:
+      - "個人カードに経費専用の2枚目を追加できる"
+      - "従業員に持たせるなら年会費33,000円のダイナースクラブ ビジネスカードが選択肢"
+    official_url: "https://www.diners.co.jp/"
+    blog_url: "https://cc-lifeblog.com/diners-business-account-card/"
+    affiliate_url: ""
+    checked: ""
+    notes: "ブログは2026年10月8日時点の情報"
+
+  - id: marriott-amex-premium
+    name: "Marriott Bonvoy アメリカン・エキスプレス・プレミアム・カード"
+    holding: true
+    annual_fee: "49,500円（税込）"
+    perks:
+      - "年間150万円以上の決済で、50,000ポイントまでの無料宿泊特典"
+      - "マリオット ゴールドエリート（条件達成でプラチナ）"
+    judgement: "年間150万円以上決済＋年1回以上マリオット系に泊まる人向け"
+    official_url: "https://www.americanexpress.com/ja-jp/"
+    blog_url: "https://cc-lifeblog.com/%e3%83%9e%e3%83%aa%e3%82%aa%e3%83%83%e3%83%88%e3%83%9c%e3%83%b3%e3%83%b4%e3%82%a9%e3%82%a4%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9%e3%83%97%e3%83%ac%e3%83%9f%e3%82%a2%e3%83%a0%e3%81%af%e6%9c%ac-2/"
+    affiliate_url: ""
+    checked: ""
+    notes: "⚠ ブログ内で年会費の記載が食い違っています（『マリオットボンヴォイアメックスプレミアムは本当に得か？』では49,500円、『マリオットアメックス vs ヒルトンアメックス』では82,500円）。公式で確認してください"
+
+  - id: hilton-amex-premium
+    name: "ヒルトン・オナーズ アメリカン・エキスプレス・プレミアム・カード"
+    holding: true
+    annual_fee: "66,000円（税込）"
+    earn_rate: "100円＝3ポイント（ヒルトン利用で最大7ポイント）"
+    perks:
+      - "年間150万円以上の利用で1泊無料宿泊"
+      - "ヒルトン・オナーズ ゴールドステータス自動付与（朝食無料・アップグレード）"
+      - "旅行保険 海外・国内とも最高1億円"
+      - "手荷物無料宅配・空港ラウンジ"
+    official_url: "https://www.americanexpress.com/ja-jp/"
+    blog_url: "https://cc-lifeblog.com/%e3%80%90%e3%83%9e%e3%83%aa%e3%82%aa%e3%83%83%e3%83%88%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9-vs-%e3%83%92%e3%83%ab%e3%83%88%e3%83%b3%e3%82%a2%e3%83%a1%e3%83%83%e3%82%af%e3%82%b9-%e6%af%94/"
+    affiliate_url: ""
+    checked: ""
+    notes: "ブログ記事は2025年の情報。最新の特典は公式で確認してください"
+
+  - id: amex-gold-business
+    name: "アメリカン・エキスプレス・ビジネス・ゴールド・カード"
+    holding: true
+    annual_fee: ""        # ブログに記載なし。公式サイトで確認して記入してください
+    official_url: "https://www.americanexpress.com/ja-jp/"
+    affiliate_url: ""
+    checked: ""
+
+programs:
+  - id: ana-sfc
+    name: "ANAスーパーフライヤーズ（SFC）"
+    facts:
+      - "取得の流れ: ANAプラチナステータス（年間50,000プレミアムポイント）を取得 → プラチナ達成後にSFCカードへ申し込み"
+      - "Rさんは2024年にSFC修行でANAダイヤモンドを達成"
+      - "2026年度をもって、ダイヤモンド・プラチナ・SFC会員へのアップグレードポイントの発行が終了"
+      - "スターアライアンスゴールドとしての権利は2026年以降も継続"
+      - "修行は早朝便・最終便に偏り、前泊・後泊の宿泊費が隠れた固定費になる（1泊8,000円×10回で8万円）"
+    blog_url: "https://cc-lifeblog.com/2026%e5%b9%b45%e6%9c%88%e6%94%b9%e8%a8%82%e3%81%a7%e5%a4%89%e3%82%8f%e3%82%8bsfc%e6%88%a6%e7%95%a5/"
+    checked: ""
+
+  - id: amex-ana-transfer
+    name: "アメックス → ANAマイル移行"
+    facts:
+      - "通常移行: 1ポイント＝1マイル、年間40,000マイルまで、ANAコース参加費 年5,500円（税込）"
+      - "キャンペーン: 2026年10月1日〜11月30日、移行上限なし・参加費不要、2,000ポイント＝1,000マイル。通常枠とは別枠で併用可"
+      - "移行するポイントが約5,500ポイントを超えるなら、参加費を払って通常移行したほうが得（1マイル＝2円換算）"
+    blog_url: "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/"
+    checked: ""
+
+# Rさんの実績（ANAアプリで確認済み）
+achievements:
+  - "2026-11-21時点: ANAマイレージクラブ ダイヤモンド会員、保有 309,342マイル、ANA SKY コイン 149,000コイン"
+  - "2024年 SFC修行でANAダイヤモンド達成、2025年もダイヤ継続"
+
+notes:
+  - "期限が近いネタ: アメックスのANAマイル移行『上限なし』キャンペーンは2026年11月30日まで"
