@@ -48,6 +48,12 @@ schedule:
     slots: ["07:30", "12:15", "18:30", "21:30"]   # 1日4投稿
     # X Premium契約中なら true（長文投稿が可能になる）
     premium: false
+    # ブログへの誘導方法
+    #   profile : 本文で「詳しくはプロフのリンクから」と案内（URLなし。X APIの料金が安い）
+    #   reply   : 返信欄に記事URLを投稿（URL付き投稿はX APIの料金が高い）
+    blog_link: profile
+    # 数値を取得する期間（日）。長いほどX APIの読み取り料金がかかる
+    metrics_days: 14
   instagram:
     # 曜日ごとの投稿形式（mon..sun）。carousel / reel / none
     weekly:

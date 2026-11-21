@@ -84,8 +84,11 @@ def x_account() -> dict:
 
 # ================= Instagram =================
 def _ig() -> tuple[str, str, str]:
+    """Instagramログイン（IGで始まるトークン）は graph.instagram.com、Facebookログインは graph.facebook.com。"""
     ver = os.environ.get("IG_GRAPH_VERSION", "v23.0")
-    return f"https://graph.facebook.com/{ver}", env("IG_USER_ID"), env("IG_ACCESS_TOKEN")
+    token = env("IG_ACCESS_TOKEN")
+    host = os.environ.get("IG_GRAPH_HOST") or ("graph.instagram.com" if token.startswith("IG") else "graph.facebook.com")
+    return f"https://{host}/{ver}", env("IG_USER_ID"), token
 
 
 def _ig_req(method: str, path: str, **params) -> dict:

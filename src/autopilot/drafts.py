@@ -86,7 +86,10 @@ def build(day: date, plan: dict, research_notes: str, materials_idx: dict | None
         pre_warn: list[str] = []
         blog_url = check_blog(p.get("blog_url", ""), pre_warn)
         if blog_url:
-            thread.append(f"詳しくはブログにまとめています👇\n{blog_url}")
+            if cfg["schedule"]["x"].get("blog_link", "profile") == "reply":
+                thread.append(f"詳しくはブログにまとめています👇\n{blog_url}")
+            elif "プロフ" not in text and not thread:
+                thread.append("詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ")
         item = {
             "id": f"x-{i + 1:02d}", "platform": "x", "kind": "post",
             "scheduled_at": _at(day, slots[i], cfg), "theme": p["theme"], "intent": p.get("intent", ""),

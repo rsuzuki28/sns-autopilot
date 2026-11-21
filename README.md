@@ -61,8 +61,8 @@ X と Instagram の運用を GitHub Actions で毎日自動で回す仕組みで
 
 | Secret名 | 中身 |
 |---|---|
-| `IG_USER_ID` | 上で控えた Instagram ビジネスアカウントID |
-| `IG_ACCESS_TOKEN` | アクセストークン |
+| `INSTAGRAM_ACCOUNT_ID` | Instagram アカウントID |
+| `INSTAGRAM_ACCESS_TOKEN` | アクセストークン（Instagramログイン・Facebookログインどちらでも可） |
 
 ### 5. Google（素材の受け取り・スプレッドシート報告）
 共有ドライブ「SNS収益化」に、素材フォルダとレポート用スプレッドシートを作成済みです。

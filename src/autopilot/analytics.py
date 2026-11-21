@@ -28,7 +28,8 @@ def collect(days: int = 30) -> dict:
     rows = [r for r in read_jsonl(POSTED_LOG) if t - datetime.fromisoformat(r["posted_at"]) <= timedelta(days=days)]
     out = []
     errors = []
-    x_rows = [r for r in rows if r["platform"] == "x"]
+    x_days = int(cfg["schedule"]["x"].get("metrics_days", 14))  # X APIの読み取り料金を抑える
+    x_rows = [r for r in rows if r["platform"] == "x" and t - datetime.fromisoformat(r["posted_at"]) <= timedelta(days=x_days)]
     if x_rows:
         try:
             mx = pf.x_metrics([r["remote_id"] for r in x_rows])
