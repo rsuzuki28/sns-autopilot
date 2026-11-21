@@ -36,10 +36,21 @@ jobs:
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
           R2_PUBLIC_BASE_URL: ${{ secrets.R2_PUBLIC_BASE_URL }}
-        run: python -m autopilot publish
+        run: set -o pipefail; python -m autopilot publish 2>&1 | tee -a run.log
       - name: 投稿記録を保存
         run: |
           git config user.name "sns-autopilot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data
           git diff --cached --quiet || (git commit -m "投稿記録" && git pull --rebase origin main && git push origin HEAD:main)
+      - name: 失敗ログを保存（Claudeが原因を調べられるように）
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/runlog && cd /tmp/runlog
+          cp "$GITHUB_WORKSPACE/run.log" publish.log 2>/dev/null || echo "ログなし（準備段階で失敗。Actionsの画面を確認）" > publish.log
+          echo "run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> publish.log
+          git init -q -b run-logs/publish
+          git add . && git -c user.name=sns-autopilot -c user.email=github-actions[bot]@users.noreply.github.com commit -qm "failed run ${{ github.run_id }}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" run-logs/publish

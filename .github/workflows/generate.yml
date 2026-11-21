@@ -2,6 +2,9 @@ name: 1. 台本と下書きを作る
 on:
   schedule:
     - cron: "17 11 * * *"   # 毎日 20:17 JST（翌日分を作成）
+  push:
+    branches: [main]
+    paths: [".github/run-now/generate"]   # このファイルを更新すると今すぐ実行
   workflow_dispatch:
     inputs:
       date:
@@ -42,7 +45,7 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           PYTHONPATH: src
           REVIEW_MEDIA_BASE: ${{ steps.day.outputs.mode == 'manual' && format('https://github.com/{0}/blob/drafts/{1}/queue/{1}/', github.repository, steps.day.outputs.date) || '' }}
-        run: python -m autopilot generate --date "${{ steps.day.outputs.date }}"
+        run: set -o pipefail; python -m autopilot generate --date "${{ steps.day.outputs.date }}" 2>&1 | tee -a run.log
       - name: 保存（承認制ならPull Request、自動ならそのまま公開キューへ）
         env:
           GH_TOKEN: ${{ github.token }}
@@ -66,3 +69,14 @@ jobs:
             git commit -m "自動承認: $D"
             git pull --rebase origin main && git push origin HEAD:main
           fi
+      - name: 失敗ログを保存（Claudeが原因を調べられるように）
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/runlog && cd /tmp/runlog
+          cp "$GITHUB_WORKSPACE/run.log" generate.log 2>/dev/null || echo "ログなし（準備段階で失敗。Actionsの画面を確認）" > generate.log
+          echo "run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> generate.log
+          git init -q -b run-logs/generate
+          git add . && git -c user.name=sns-autopilot -c user.email=github-actions[bot]@users.noreply.github.com commit -qm "failed run ${{ github.run_id }}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" run-logs/generate
