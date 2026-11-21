@@ -1,0 +1,23 @@
+{
+  "id": "x-04",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-23T21:30:00+09:00",
+  "theme": "最新キャンペーン速報（ANAとJALのブラックフライデー特典航空券比較）",
+  "intent": "夜の保存されやすい比較まとめ。ANA・JAL両方のマイラーに届く切り口",
+  "text": "保存版｜ブラックフライデーの特典航空券、ANAとJALの違い\n\nANA\n・国内線全路線＋国際線36路線が減額\n・発券は11/24 23:59まで\n\nJAL\n・対象の国際線が減額、ホノルル片道14,000マイルから\n・申込は11/30まで\n\n締切の早いANAから先に確認を。",
+  "thread": [
+    "JALの搭乗期間は、ホノルル・グアム線が2027/7/31まで、那覇－台北線が2027/3/27まで。\nANAの国際線は、締切が予約・発券する国の時間になるので公式ページで確認を。\n\n詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/domestic-flight-awards/",
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/international-flight-awards/",
+    "https://www.jal.co.jp/jp/ja/121campaign/2026/int-nov-discount/",
+    "https://www.jal.co.jp/jp/ja/campaign/blackflyday/"
+  ],
+  "blog_url": "https://cc-lifeblog.com/ana-mile-award-ticket-guide-2026/",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}

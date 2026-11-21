@@ -1,0 +1,30 @@
+{
+ "1jIENWbdat-ypeKirdER1DhT-kE-vZUW8": {
+  "id": "1jIENWbdat-ypeKirdER1DhT-kE-vZUW8",
+  "name": "2026-11-21_ANAアプリ_ダイヤモンド_309342マイル.jpg",
+  "folder": "05_カード券面・ポイント画面",
+  "kind": "image",
+  "modifiedTime": "2026-11-21T07:15:35.167Z",
+  "added_at": "2026-11-22T02:58:27.152553+09:00",
+  "used_count": 1,
+  "used_in": [
+   "2026-11-23/ig-carousel"
+  ],
+  "description": "ANAマイレージクラブアプリのマイレージ画面のスクリーンショット。ANAダイヤモンドステータスで、保有マイル309,342マイル、プレミアムポイント12,196pt、アップグレードポイント12pt、ANA SKYコイン149,000コインが表示されている（2026/11/21 16:13時点）。",
+  "tags": [
+   "ANAアプリ",
+   "ANAダイヤモンド",
+   "マイル残高",
+   "プレミアムポイント",
+   "SFC修行",
+   "ANA SKYコイン",
+   "マイレージ画面",
+   "スクリーンショット"
+  ],
+  "place_guess": "不明（スマートフォンアプリ画面）",
+  "privacy_risk": false,
+  "privacy_reason": "氏名・会員番号・カード番号・QRコード等は写っておらず、表示はステータスとポイント残高のみ。",
+  "quality": "good",
+  "text_safe_area": "bottom"
+ }
+}

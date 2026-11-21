@@ -1,0 +1,19 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-23T07:30:00+09:00",
+  "theme": "最新キャンペーン速報（ANA減額マイル・締切リマインド）",
+  "intent": "朝の軽めリマインド。締切が明日の減額マイルを、11/30と混同させずに伝えて即行動を促す",
+  "text": "結論から書きます。\nANAの減額マイル特典航空券、発券は明日11/24 23:59まで。\n\n例：東京⇔大阪 8,000→5,000マイル（ウェブ予約のみ）\n\nセール全体の11/30とは締切が違うので注意。\n1万マイル抽選（100名）の参加登録も24日までです。",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/domestic-flight-awards/",
+    "https://www.anahd.co.jp/group/pr/202611/20261116-2.html"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
