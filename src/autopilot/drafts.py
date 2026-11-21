@@ -88,8 +88,8 @@ def build(day: date, plan: dict, research_notes: str, materials_idx: dict | None
         if blog_url:
             if cfg["schedule"]["x"].get("blog_link", "profile") == "reply":
                 thread.append(f"詳しくはブログにまとめています👇\n{blog_url}")
-            elif "プロフ" not in text and not thread:
-                thread.append("詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ")
+            elif "プロフ" not in "".join([text, *thread]):
+                thread = add_blog_cta(thread, limit)
         item = {
             "id": f"x-{i + 1:02d}", "platform": "x", "kind": "post",
             "scheduled_at": _at(day, slots[i], cfg), "theme": p["theme"], "intent": p.get("intent", ""),
@@ -184,6 +184,16 @@ def build(day: date, plan: dict, research_notes: str, materials_idx: dict | None
         for mid, key in used_materials:
             materials.mark_used(materials_idx, [mid], key)
     return day_dir
+
+
+BLOG_CTA_X = "詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+
+
+def add_blog_cta(thread: list[str], limit: int) -> list[str]:
+    """最後の返信に誘導文を足す。文字数が足りなければ返信を1つ追加。"""
+    if thread and cp.x_weighted_length(thread[-1] + "\n\n" + BLOG_CTA_X) <= limit:
+        return thread[:-1] + [thread[-1] + "\n\n" + BLOG_CTA_X]
+    return thread + [BLOG_CTA_X]
 
 
 BLOG_CTA_IG = "\n\n📝 もっと詳しい解説はプロフィールのリンク（ブログ）から"
