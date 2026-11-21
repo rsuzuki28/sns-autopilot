@@ -20,6 +20,8 @@ def _obj(props: dict) -> dict:
 X_POST = _obj({
     "theme": _STR,
     "text": _STR,
+    "material_id": _STR,        # 添付する写真の素材ID（無ければ空文字）
+    "blog_url": _STR,           # 誘導するブログ記事URL（無ければ空文字）
     "thread": _STRS,            # 続きのツリー投稿（不要なら空）
     "affiliate_card_id": _STR,  # 紹介リンクを入れるカードID（無ければ空文字）
     "sources": _STRS,
@@ -29,7 +31,9 @@ CAROUSEL = _obj({
     "theme": _STR,
     "cover_title": _STR,
     "cover_subtitle": _STR,
-    "slides": {"type": "array", "items": _obj({"heading": _STR, "points": _STRS})},
+    "cover_material_id": _STR,
+    "slides": {"type": "array", "items": _obj({"heading": _STR, "points": _STRS, "material_id": _STR})},
+    "blog_url": _STR,
     "closing_message": _STR,
     "caption": _STR,
     "hashtags": _STRS,
@@ -39,7 +43,9 @@ CAROUSEL = _obj({
 REEL = _obj({
     "theme": _STR,
     "hook": _STR,
-    "scenes": {"type": "array", "items": _obj({"text": _STR, "narration": _STR, "seconds": {"type": "number"}})},
+    "hook_material_id": _STR,
+    "scenes": {"type": "array", "items": _obj({"text": _STR, "narration": _STR, "seconds": {"type": "number"}, "material_id": _STR})},
+    "blog_url": _STR,
     "caption": _STR,
     "hashtags": _STRS,
     "affiliate_card_id": _STR,
@@ -70,6 +76,11 @@ def _top_metrics() -> str:
     return "\n".join(f"- score={r.get('score')} [{r['platform']}/{r['kind']}] {r.get('summary','')[:80]}" for r in top) or "（なし）"
 
 
+def _blog_list(posts: list[dict]) -> str:
+    ok = [p for p in posts if p.get("sns_ok")]
+    return "\n".join(f"- {p['title']} {p['url']}" for p in ok[:120]) or "（取得できませんでした。blog_url は空文字に）"
+
+
 def build_system(cfg: dict) -> str:
     a = cfg["account"]
     c = cfg["compliance"]
@@ -94,10 +105,16 @@ def build_system(cfg: dict) -> str:
 7. X: {x_limit}。ハッシュタグは0〜1個。絵文字は控えめ。改行で読みやすく。
 8. Instagram: カルーセルのスライドは1枚あたり見出し+3〜4項目、1項目は全角25文字程度まで。キャプション末尾に保存・フォローを促す一文。
 9. リール: 冒頭1秒で止まるフック。1シーン2〜4秒、全体15〜30秒。画面テキストは1シーン全角20文字以内。
-10. 出典のある情報は sources にURLを入れる。"""
+10. 出典のある情報は sources にURLを入れる。
+11. 体験談は「キャラクター」と「素材の説明」に書かれている事実だけを使う。行っていない旅行・持っていないカードの体験を作らない。
+12. 素材（写真・動画）は「使える素材」のIDだけを指定する。内容が合う素材が無ければ空文字（文字だけのデザインになる）。同じ素材を同じ日に使い回さない。
+    - カルーセル: 表紙は写真推奨。中のスライドは図解なので写真なしが基本、体験談スライドだけ写真を使う。
+    - リール: 各シーンに写真か動画を割り当てる（動画素材を優先）。素材が無いシーンは空文字。
+    - X: 写真付きが向く投稿（旅行記・ラウンジ・機内食など）だけ material_id を入れる。
+13. ブログ誘導: 内容が合うブログ記事があれば blog_url にそのURLを入れる（記事一覧にあるURLのみ）。X ではリンクはシステムが返信欄に入れるので本文にURLを書かない。インスタはキャプションで「詳しくはプロフィールのリンクから」と誘導する。"""
 
 
-def plan(day: date, research_notes: str) -> dict:
+def plan(day: date, research_notes: str, blog_posts: list[dict] | None = None, materials_catalog: str = "") -> dict:
     cfg = load_account()
     wd = WEEKDAYS[day.weekday()]
     ig_kind = cfg["schedule"]["instagram"]["weekly"].get(wd, "none")
@@ -136,6 +153,13 @@ def plan(day: date, research_notes: str) -> dict:
 
 # 今日のリサーチ
 {research_notes}
+
+# ブログ記事一覧（誘導先。この中のURLだけ使う）
+{_blog_list(blog_posts or [])}
+（目安: 投稿の{int(cfg.get('blog', {}).get('promote_ratio', 0.5) * 100)}%くらいでブログに誘導）
+
+# 使える素材（写真・動画）
+{materials_catalog or "（素材はまだありません。素材なしのデザインで作ってください）"}
 
 notes_for_reviewer には、確認が必要な点・自信のない点を正直に書いてください。"""
     return llm.generate_json(build_system(cfg), prompt, SCHEMA)

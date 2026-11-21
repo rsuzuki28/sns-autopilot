@@ -39,6 +39,7 @@ jobs:
       - name: リサーチ → 台本 → 画像/動画
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           PYTHONPATH: src
           REVIEW_MEDIA_BASE: ${{ steps.day.outputs.mode == 'manual' && format('https://github.com/{0}/blob/drafts/{1}/queue/{1}/', github.repository, steps.day.outputs.date) || '' }}
         run: python -m autopilot generate --date "${{ steps.day.outputs.date }}"
@@ -52,7 +53,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ "$MODE" = "manual" ]; then
             git checkout -B "drafts/$D"
-            git add queue research
+            git add queue research data
             git commit -m "下書き: $D"
             git push -f origin "drafts/$D"
             if ! gh pr view "drafts/$D" >/dev/null 2>&1; then
@@ -61,7 +62,7 @@ jobs:
               gh pr edit "drafts/$D" --body-file "queue/$D/REVIEW.md"
             fi
           else
-            git add queue research
+            git add queue research data
             git commit -m "自動承認: $D"
             git pull --rebase origin main && git push origin HEAD:main
           fi

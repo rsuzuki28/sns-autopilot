@@ -37,16 +37,18 @@ def run(dry_run: bool = False) -> int:
             continue
         try:
             if item["platform"] == "x":
-                ids = pf.x_post_thread(item["text"], item.get("thread", []))
+                imgs = [folder / m for m in item.get("media", [])]
+                ids = pf.x_post_thread(item["text"], item.get("thread", []), imgs)
                 remote_id = ids[0]
                 extra = {"thread_ids": ids[1:]}
             elif item["kind"] == "carousel":
                 urls = [pf.public_url(folder / m) for m in item["media"]]
-                remote_id, extra = pf.ig_post_carousel(urls, item["caption"]), {}
+                remote_id = pf.ig_post_carousel(urls, item["caption"])
+                extra = {"permalink": pf.ig_permalink(remote_id)}
             elif item["kind"] == "reel":
                 cover = pf.public_url(folder / item["cover"]) if item.get("cover") else None
                 remote_id = pf.ig_post_reel(pf.public_url(folder / item["media"][0]), item["caption"], cover)
-                extra = {}
+                extra = {"permalink": pf.ig_permalink(remote_id)}
             else:
                 raise RuntimeError(f"未対応の種類: {item['kind']}")
         except Exception as e:  # 1件の失敗で他を止めない
@@ -57,11 +59,18 @@ def run(dry_run: bool = False) -> int:
         append_jsonl(POSTED_LOG, {
             "key": key, "platform": item["platform"], "kind": item["kind"], "remote_id": remote_id,
             "posted_at": now(cfg).isoformat(), "theme": item.get("theme", ""), "intent": item.get("intent", ""),
-            "summary": summary[:200], **extra,
+            "summary": summary[:200], "blog_url": item.get("blog_url", ""),
+            "materials": item.get("materials", []), "url": _url(item["platform"], remote_id, extra), **extra,
         })
         print(f"  ✓ 投稿しました id={remote_id}")
         count += 1
     return count
+
+
+def _url(platform: str, remote_id: str, extra: dict) -> str:
+    if platform == "x":
+        return f"https://x.com/i/web/status/{remote_id}"
+    return extra.get("permalink", "")
 
 
 if __name__ == "__main__":

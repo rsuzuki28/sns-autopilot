@@ -55,6 +55,14 @@ def collect(days: int = 30) -> dict:
     for e in errors:
         print("⚠", e)
     print(f"{len(out)}件の投稿の数値を更新しました")
+    from . import google_api, report_sheet
+    if google_api.available():
+        report_sheet.write_daily(data, stats)
+        print("スプレッドシートを更新しました")
+    else:
+        report_sheet.merge_post_metrics(out)
+        report_sheet.snapshot_totals(json.loads(report_sheet.POST_METRICS.read_text(encoding="utf-8")), stats)
+        print("（GOOGLE_SERVICE_ACCOUNT_JSON が無いのでスプレッドシートは更新していません）")
     return data
 
 
@@ -62,47 +70,64 @@ REPORT_SYSTEM = """あなたはSNSグロースのアナリストです。クレ�
 次の1週間の台本作りに直接使える、具体的で検証可能な示唆を出します。データが少ないときは断定せず「仮説」として扱います。"""
 
 
+WEEKLY_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "report_markdown": {"type": "string"},
+        "learnings": {"type": "string"},
+        "highlight": {"type": "string"},
+        "top_post": {"type": "string"},
+        "top_post_reason": {"type": "string"},
+        "next_actions": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": ["report_markdown", "learnings", "highlight", "top_post", "top_post_reason", "next_actions"],
+    "additionalProperties": False,
+}
+
+
 def weekly_report() -> str:
+    from . import google_api, report_sheet
     cfg = load_account()
     t = now(cfg)
-    data = json.loads(METRICS_LATEST.read_text(encoding="utf-8")) if METRICS_LATEST.exists() else {"posts": []}
-    stats = read_jsonl(ACCOUNT_STATS)[-30:]
+    store = json.loads(report_sheet.POST_METRICS.read_text(encoding="utf-8")) if report_sheet.POST_METRICS.exists() else {}
+    recent = [p for p in store.values() if t - datetime.fromisoformat(p["posted_at"]) <= timedelta(days=30)]
+    posts = [{k: p.get(k) for k in ("platform", "kind", "theme", "intent", "posted_at", "summary", "metrics", "score", "blog_url", "materials")}
+             for p in recent]
+    totals = read_jsonl(report_sheet.DAILY_TOTALS)[-35:]
     prev = LEARNINGS.read_text(encoding="utf-8") if LEARNINGS.exists() else "（なし）"
-    posts = [{k: p.get(k) for k in ("platform", "kind", "theme", "intent", "posted_at", "summary", "metrics", "score")}
-             for p in data["posts"]]
     prompt = f"""# 直近30日の投稿と数値
 ```json
 {json.dumps(posts, ensure_ascii=False)}
 ```
 
-# フォロワー数などの推移
+# 日ごとの累計（フォロワー数・インプ等。前日との差がその日の伸び）
 ```json
-{json.dumps(stats, ensure_ascii=False)}
+{json.dumps(totals, ensure_ascii=False)}
 ```
 
 # 先週までの学び
 {prev}
 
-# 収益化の目標
-将来的にクレカ・旅行系のアフィリエイトで収益化したい。今はフォロワーと信頼を積み上げる段階。
+# 目的
+メインブログ {cfg.get('blog', {}).get('url', '')} への送客と、将来のクレカ・旅行系アフィリエイト収益化。今はフォロワーと信頼を積み上げる段階。
 
-次の2つを、区切り線「=====LEARNINGS=====」で分けて出力してください。
-
-1つ目: 週次レポート（Markdown）
-- サマリー（数字で）
-- 伸びた投稿 / 伸びなかった投稿とその理由の仮説
-- テーマ別・形式別・時間帯別の傾向
-- 来週試すこと（3〜5個、検証方法つき）
-- 収益化に向けた進捗と次の一手
-
-2つ目: 台本AIに渡す「学び」（箇条書き30行以内。具体的な指示の形で。古くなった学びは消す）"""
-    text = llm.generate_text(REPORT_SYSTEM, prompt)
-    report, _, learnings = text.partition("=====LEARNINGS=====")
+次の項目を出力してください。
+- report_markdown: 週次レポート（Markdown）。サマリー（数字で）/ 伸びた投稿・伸びなかった投稿と理由の仮説 / テーマ別・形式別・時間帯別・素材あり/なしの傾向 / ブログ誘導の状況 / 来週試すこと（検証方法つき）/ 収益化に向けた進捗と次の一手
+- learnings: 台本AIに渡す「学び」。箇条書き30行以内、具体的な指示の形で。古くなった学びは消す
+- highlight: スプレッドシートのダッシュボードに載せる今週の要約（3〜5行、数字入り）
+- top_post: 今週一番伸びた投稿（SNS名と冒頭30文字）
+- top_post_reason: 伸びた理由の仮説（2〜3文）
+- next_actions: 来週試すこと（3〜5個、各1文）
+データが少ないときは断定せず「仮説」と書いてください。"""
+    res = llm.generate_json(REPORT_SYSTEM, prompt, WEEKLY_SCHEMA)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     iso = t.isocalendar()
     path = REPORTS_DIR / f"{iso.year}-W{iso.week:02d}.md"
-    path.write_text(report.strip() + "\n", encoding="utf-8")
-    if learnings.strip():
-        LEARNINGS.write_text(f"<!-- 更新: {t.date().isoformat()} -->\n{learnings.strip()}\n", encoding="utf-8")
+    path.write_text(res["report_markdown"].strip() + "\n", encoding="utf-8")
+    if res["learnings"].strip():
+        LEARNINGS.write_text(f"<!-- 更新: {t.date().isoformat()} -->\n{res['learnings'].strip()}\n", encoding="utf-8")
+    if google_api.available():
+        report_sheet.write_weekly(res)
+        print("スプレッドシートに週次サマリーを書きました")
     print(f"レポートを書きました: {path}")
-    return report
+    return res["report_markdown"]

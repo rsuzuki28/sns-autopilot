@@ -21,8 +21,26 @@ def _x_auth() -> OAuth1:
     return OAuth1(env("X_API_KEY"), env("X_API_SECRET"), env("X_ACCESS_TOKEN"), env("X_ACCESS_TOKEN_SECRET"))
 
 
-def x_post(text: str, reply_to: str | None = None) -> str:
+def x_upload_image(path: Path) -> str:
+    """画像をアップロードして media_id を返す（v2、失敗したら v1.1 で再試行）。"""
+    with path.open("rb") as fp:
+        r = requests.post(f"{X_API}/media/upload", files={"media": (path.name, fp, "image/jpeg")},
+                          data={"media_category": "tweet_image", "media_type": "image/jpeg"}, auth=_x_auth(), timeout=TIMEOUT)
+    if r.status_code < 300:
+        d = r.json().get("data", r.json())
+        return str(d.get("id") or d.get("media_id_string") or d.get("media_id"))
+    with path.open("rb") as fp:
+        r2 = requests.post("https://upload.twitter.com/1.1/media/upload.json", files={"media": fp},
+                           auth=_x_auth(), timeout=TIMEOUT)
+    if r2.status_code >= 300:
+        raise RuntimeError(f"X画像アップロードエラー v2={r.status_code}:{r.text[:200]} v1.1={r2.status_code}:{r2.text[:200]}")
+    return r2.json()["media_id_string"]
+
+
+def x_post(text: str, reply_to: str | None = None, media_ids: list[str] | None = None) -> str:
     body: dict = {"text": text}
+    if media_ids:
+        body["media"] = {"media_ids": media_ids}
     if reply_to:
         body["reply"] = {"in_reply_to_tweet_id": reply_to}
     r = requests.post(f"{X_API}/tweets", json=body, auth=_x_auth(), timeout=TIMEOUT)
@@ -31,8 +49,14 @@ def x_post(text: str, reply_to: str | None = None) -> str:
     return r.json()["data"]["id"]
 
 
-def x_post_thread(text: str, thread: list[str]) -> list[str]:
-    ids = [x_post(text)]
+def x_post_thread(text: str, thread: list[str], images: list[Path] | None = None) -> list[str]:
+    media_ids = None
+    if images:
+        try:
+            media_ids = [x_upload_image(p) for p in images[:4]]
+        except Exception as e:  # 画像で失敗しても文章は投稿する
+            print(f"  ⚠ 画像なしで投稿します: {e}")
+    ids = [x_post(text, media_ids=media_ids)]
     for t in thread:
         time.sleep(3)
         ids.append(x_post(t, reply_to=ids[-1]))
@@ -130,6 +154,13 @@ def ig_insights(media_id: str) -> dict:
             except Exception:
                 pass
         return out
+
+
+def ig_permalink(media_id: str) -> str:
+    try:
+        return _ig_req("GET", media_id, fields="permalink").get("permalink", "")
+    except Exception:
+        return ""
 
 
 def ig_account() -> dict:

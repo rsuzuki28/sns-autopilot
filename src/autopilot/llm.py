@@ -18,9 +18,9 @@ def _client() -> anthropic.Anthropic:
     return anthropic.Anthropic()
 
 
-def _call(messages: list, system: str, *, tools=None, output_config=None) -> anthropic.types.beta.BetaMessage:
+def _call(messages: list, system: str, *, tools=None, output_config=None, effort=None) -> anthropic.types.beta.BetaMessage:
     cfg = load_account()["llm"]
-    oc = {"effort": cfg.get("effort", "high")}
+    oc = {"effort": effort or cfg.get("effort", "high")}
     if output_config:
         oc.update(output_config)
     kwargs = dict(
@@ -72,12 +72,13 @@ def research(system: str, prompt: str) -> str:
     raise LLMError("リサーチが終わりませんでした（pause_turnの繰り返し）")
 
 
-def generate_json(system: str, prompt: str, schema: dict) -> dict:
-    """JSONスキーマ通りの出力を返す。"""
+def generate_json(system: str, prompt, schema: dict, effort: str | None = None) -> dict:
+    """JSONスキーマ通りの出力を返す。prompt は文字列、または画像を含むコンテンツブロックのリスト。"""
     msg = _call(
         [{"role": "user", "content": prompt}],
         system,
         output_config={"format": {"type": "json_schema", "schema": schema}},
+        effort=effort,
     )
     _check(msg)
     return json.loads(_text_of(msg))
