@@ -1,0 +1,158 @@
+"""X API / Instagram Graph API とメディアのホスティング。"""
+from __future__ import annotations
+
+import os
+import time
+from pathlib import Path
+
+import requests
+from requests_oauthlib import OAuth1
+
+from .config import ROOT, env
+
+TIMEOUT = 60
+
+
+# ================= X =================
+X_API = "https://api.x.com/2"
+
+
+def _x_auth() -> OAuth1:
+    return OAuth1(env("X_API_KEY"), env("X_API_SECRET"), env("X_ACCESS_TOKEN"), env("X_ACCESS_TOKEN_SECRET"))
+
+
+def x_post(text: str, reply_to: str | None = None) -> str:
+    body: dict = {"text": text}
+    if reply_to:
+        body["reply"] = {"in_reply_to_tweet_id": reply_to}
+    r = requests.post(f"{X_API}/tweets", json=body, auth=_x_auth(), timeout=TIMEOUT)
+    if r.status_code >= 300:
+        raise RuntimeError(f"X投稿エラー {r.status_code}: {r.text[:500]}")
+    return r.json()["data"]["id"]
+
+
+def x_post_thread(text: str, thread: list[str]) -> list[str]:
+    ids = [x_post(text)]
+    for t in thread:
+        time.sleep(3)
+        ids.append(x_post(t, reply_to=ids[-1]))
+    return ids
+
+
+def x_metrics(tweet_ids: list[str]) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for i in range(0, len(tweet_ids), 100):
+        chunk = tweet_ids[i:i + 100]
+        r = requests.get(f"{X_API}/tweets", params={"ids": ",".join(chunk), "tweet.fields": "public_metrics,created_at"},
+                         auth=_x_auth(), timeout=TIMEOUT)
+        if r.status_code >= 300:
+            raise RuntimeError(f"X指標取得エラー {r.status_code}: {r.text[:500]}")
+        for t in r.json().get("data", []):
+            out[t["id"]] = t.get("public_metrics", {})
+    return out
+
+
+def x_account() -> dict:
+    r = requests.get(f"{X_API}/users/me", params={"user.fields": "public_metrics"}, auth=_x_auth(), timeout=TIMEOUT)
+    r.raise_for_status()
+    return r.json()["data"].get("public_metrics", {})
+
+
+# ================= Instagram =================
+def _ig() -> tuple[str, str, str]:
+    ver = os.environ.get("IG_GRAPH_VERSION", "v23.0")
+    return f"https://graph.facebook.com/{ver}", env("IG_USER_ID"), env("IG_ACCESS_TOKEN")
+
+
+def _ig_req(method: str, path: str, **params) -> dict:
+    base, _, token = _ig()
+    params["access_token"] = token
+    r = requests.request(method, f"{base}/{path}", params=params if method == "GET" else None,
+                         data=params if method != "GET" else None, timeout=TIMEOUT)
+    if r.status_code >= 300:
+        raise RuntimeError(f"Instagram APIエラー {r.status_code}: {r.text[:500]}")
+    return r.json()
+
+
+def _ig_wait(container_id: str, timeout_s: int = 600) -> None:
+    start = time.time()
+    while time.time() - start < timeout_s:
+        st = _ig_req("GET", container_id, fields="status_code,status").get("status_code")
+        if st == "FINISHED":
+            return
+        if st in ("ERROR", "EXPIRED"):
+            raise RuntimeError(f"Instagramのメディア処理に失敗しました: {st}")
+        time.sleep(10)
+    raise RuntimeError("Instagramのメディア処理がタイムアウトしました")
+
+
+def _ig_publish(creation_id: str) -> str:
+    _, uid, _ = _ig()
+    return _ig_req("POST", f"{uid}/media_publish", creation_id=creation_id)["id"]
+
+
+def ig_post_carousel(image_urls: list[str], caption: str) -> str:
+    _, uid, _ = _ig()
+    children = []
+    for u in image_urls[:10]:
+        children.append(_ig_req("POST", f"{uid}/media", image_url=u, is_carousel_item="true")["id"])
+    for c in children:
+        _ig_wait(c)
+    cid = _ig_req("POST", f"{uid}/media", media_type="CAROUSEL", children=",".join(children), caption=caption)["id"]
+    _ig_wait(cid)
+    return _ig_publish(cid)
+
+
+def ig_post_reel(video_url: str, caption: str, cover_url: str | None = None) -> str:
+    _, uid, _ = _ig()
+    params = dict(media_type="REELS", video_url=video_url, caption=caption, share_to_feed="true")
+    if cover_url:
+        params["cover_url"] = cover_url
+    cid = _ig_req("POST", f"{uid}/media", **params)["id"]
+    _ig_wait(cid, timeout_s=900)
+    return _ig_publish(cid)
+
+
+IG_METRICS = ["views", "reach", "saved", "likes", "comments", "shares", "total_interactions"]
+
+
+def ig_insights(media_id: str) -> dict:
+    """指標はAPIのバージョンやメディア種別で使えるものが違うので、失敗したら1つずつ取る。"""
+    try:
+        data = _ig_req("GET", f"{media_id}/insights", metric=",".join(IG_METRICS))["data"]
+        return {d["name"]: d["values"][0]["value"] if d.get("values") else d.get("total_value", {}).get("value") for d in data}
+    except RuntimeError:
+        out = {}
+        for m in IG_METRICS:
+            try:
+                d = _ig_req("GET", f"{media_id}/insights", metric=m)["data"][0]
+                out[m] = d["values"][0]["value"] if d.get("values") else d.get("total_value", {}).get("value")
+            except Exception:
+                pass
+        return out
+
+
+def ig_account() -> dict:
+    _, uid, _ = _ig()
+    return _ig_req("GET", uid, fields="followers_count,media_count")
+
+
+# ================= メディアのホスティング =================
+def public_url(local: Path) -> str:
+    """Instagramに渡す公開URLを返す。"""
+    from .config import load_account
+    host = load_account().get("media_host", "github_raw")
+    rel = local.resolve().relative_to(ROOT.resolve()).as_posix()
+    if host == "github_raw":
+        repo = env("GITHUB_REPOSITORY")
+        branch = os.environ.get("MEDIA_BRANCH", "main")
+        return f"https://raw.githubusercontent.com/{repo}/{branch}/{rel}"
+    if host == "r2":
+        import boto3  # 必要なときだけ読み込む
+        s3 = boto3.client("s3", endpoint_url=env("R2_ENDPOINT"), aws_access_key_id=env("R2_ACCESS_KEY_ID"),
+                          aws_secret_access_key=env("R2_SECRET_ACCESS_KEY"), region_name="auto")
+        bucket = env("R2_BUCKET")
+        ctype = "video/mp4" if local.suffix == ".mp4" else "image/jpeg"
+        s3.upload_file(str(local), bucket, rel, ExtraArgs={"ContentType": ctype})
+        return f"{env('R2_PUBLIC_BASE_URL').rstrip('/')}/{rel}"
+    raise RuntimeError(f"未対応の media_host: {host}")

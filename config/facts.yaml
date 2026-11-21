@@ -1,0 +1,29 @@
+# ===== 確認済みファクト集 =====
+# AIは「年会費」「還元率」「マイル数」などの数字をここと当日のリサーチ結果からしか使いません。
+# リサーチにもここにもない数字はPull Requestで「要確認」と警告されます。
+# 公式サイトで確認した内容だけを書き、checked に確認日を入れてください。
+#
+# affiliate_url を入れたカードは、紹介するときにPR表記が自動で付きます。
+
+cards:
+  - id: sample-card
+    name: "（サンプル）〇〇マイルカード"
+    annual_fee: "初年度無料、2年目以降 2,200円（税込）"
+    earn_rate: "200円ごとに1マイル"
+    perks:
+      - "国内主要空港のカードラウンジが無料"
+    official_url: "https://example.com/"
+    affiliate_url: ""          # ASPの紹介リンク（無ければ空欄）
+    checked: "2026-11-01"
+    notes: "これはサンプルです。実在するカード情報に書き換えてください。"
+
+programs: []
+#  - id: ana-mileage-club
+#    name: "ANAマイレージクラブ"
+#    facts:
+#      - "..."
+#    official_url: "https://..."
+#    checked: "YYYY-MM-DD"
+
+# 自由記述のメモ（交換ルート、過去のキャンペーン傾向など）
+notes: []

@@ -1,0 +1,67 @@
+name: 1. 台本と下書きを作る
+on:
+  schedule:
+    - cron: "17 11 * * *"   # 毎日 20:17 JST（翌日分を作成）
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "対象日 YYYY-MM-DD（空欄なら翌日）"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: 日本語フォントとffmpegを入れる
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      - run: pip install -r requirements.txt
+      - name: 対象日を決める
+        id: day
+        run: |
+          D="${{ github.event.inputs.date }}"
+          [ -z "$D" ] && D=$(TZ=Asia/Tokyo date -d tomorrow +%F)
+          echo "date=$D" >> "$GITHUB_OUTPUT"
+          echo "mode=$(python -c 'import yaml;print(yaml.safe_load(open("config/account.yaml"))["approval"])')" >> "$GITHUB_OUTPUT"
+      - name: リサーチ → 台本 → 画像/動画
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONPATH: src
+          REVIEW_MEDIA_BASE: ${{ steps.day.outputs.mode == 'manual' && format('https://github.com/{0}/blob/drafts/{1}/queue/{1}/', github.repository, steps.day.outputs.date) || '' }}
+        run: python -m autopilot generate --date "${{ steps.day.outputs.date }}"
+      - name: 保存（承認制ならPull Request、自動ならそのまま公開キューへ）
+        env:
+          GH_TOKEN: ${{ github.token }}
+          D: ${{ steps.day.outputs.date }}
+          MODE: ${{ steps.day.outputs.mode }}
+        run: |
+          git config user.name "sns-autopilot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ "$MODE" = "manual" ]; then
+            git checkout -B "drafts/$D"
+            git add queue research
+            git commit -m "下書き: $D"
+            git push -f origin "drafts/$D"
+            if ! gh pr view "drafts/$D" >/dev/null 2>&1; then
+              gh pr create --base main --head "drafts/$D" --title "📝 $D の投稿下書き" --body-file "queue/$D/REVIEW.md"
+            else
+              gh pr edit "drafts/$D" --body-file "queue/$D/REVIEW.md"
+            fi
+          else
+            git add queue research
+            git commit -m "自動承認: $D"
+            git pull --rebase origin main && git push origin HEAD:main
+          fi

@@ -1,0 +1,52 @@
+name: 3. 数値の収集と週次分析
+on:
+  schedule:
+    - cron: "43 14 * * *"   # 毎日 23:43 JST に数値を収集
+    - cron: "23 0 * * 1"    # 毎週月曜 9:23 JST に週次レポート
+  workflow_dispatch:
+    inputs:
+      report:
+        description: "週次レポートも作る"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: write-main
+  cancel-in-progress: false
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 数値を収集
+        env:
+          PYTHONPATH: src
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python -m autopilot analytics
+      - name: 週次レポート（月曜 or 手動）
+        if: github.event.schedule == '23 0 * * 1' || github.event.inputs.report == 'true'
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m autopilot report
+      - name: 保存
+        run: |
+          git config user.name "sns-autopilot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data reports
+          git diff --cached --quiet || (git commit -m "数値・分析の更新" && git pull --rebase origin main && git push origin HEAD:main)
