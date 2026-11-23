@@ -75,8 +75,10 @@ def main() -> None:
         folder = req.get("preview_folder_id") or load_account()["google"].get("preview_folder_id")
         if folder:  # 確認用にGoogleドライブ（非公開）へ
             from . import google_api as g
-            for f, mime in (("reel.mp4", "video/mp4"), ("cover.jpg", "image/jpeg"), ("REVIEW.md", "text/plain"),
-                            ("post.json", "text/plain")):
+            item = json.loads((out / "post.json").read_text(encoding="utf-8"))
+            (out / "caption.txt").write_text(item["caption"], encoding="utf-8")  # スマホでコピーしやすいように
+            for f, mime in (("reel.mp4", "video/mp4"), ("caption.txt", "text/plain"), ("cover.jpg", "image/jpeg"),
+                            ("REVIEW.md", "text/plain"), ("post.json", "text/plain")):
                 r = g.upload(out / f, folder, mime, f"{req['id']}_{f}")
                 print(f"アップロード: {f} → {r.get('webViewLink')}")
     elif a.cmd == "check":
