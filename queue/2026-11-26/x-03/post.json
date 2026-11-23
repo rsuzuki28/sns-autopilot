@@ -1,0 +1,19 @@
+{
+  "id": "x-03",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-26T18:30:00+09:00",
+  "theme": "ラウンジ・特典｜新千歳空港 国際線にプラザ・プレミアム・ラウンジ（報道）｜18:30｜単発テキスト｜素材なし",
+  "intent": "ラウンジ新情報の速報。未確認点を正直に書いて信頼を作る。CTAなし",
+  "text": "814㎡・170人超。\n新千歳空港の国際線にプラザ・プレミアム・ラウンジが12月開業予定（報道）。\n\n・国際線ターミナル4階、66番搭乗口付近\n・スープカレー、北海道ソフトクリーム\n・北米路線の新規就航に合わせた強化\n\nプライオリティ・パス対象かは未確認です。",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://news.yahoo.co.jp/articles/734648c676abb0a92aec6d8a69a8cb4df9e0ade5",
+    "https://trafficnews.jp/photo/727564"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
