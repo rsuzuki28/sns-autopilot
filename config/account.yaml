@@ -93,7 +93,7 @@ design:
   text_color: "#1F2328"
   handle_x: "@Mr_NoR_"
   handle_instagram: "@mr_nor_8"
-  handle: "@mr_nor_8"        # 画像の隅に入れる名前（インスタ用画像なのでインスタのID）
+  # アカウント名は画像・動画に一切入れない（Rさんの方針 2026-11-23）
 
 # Instagram用の画像・動画をどこに置くか（Instagram APIは公開URLが必要）
 #   github_raw : このリポジトリ（Public）の raw URL を使う

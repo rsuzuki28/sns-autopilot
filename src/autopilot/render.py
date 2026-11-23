@@ -119,7 +119,7 @@ class Theme:
         self.accent = _hex(design["accent_color"])
         self.bg = _hex(design["background"])
         self.text = _hex(design["text_color"])
-        self.handle = design.get("handle", "")
+        self.handle = ""  # アカウント名は画像・動画に入れない（Rさんの方針）
 
 
 # 素材ID → (ファイルパス, "image"|"video", 文字を置く位置) を返す関数。素材が無ければ None
@@ -195,7 +195,6 @@ def carousel_cover_screenshot(t: Theme, title: str, subtitle: str, photo: Path) 
     _draw_lines(d, lines, ft, 80, y + 100, (255, 255, 255), 1.3)
     d.rectangle([0, H - 24, W, H], fill=t.accent)
     fh = font("regular", 34)
-    d.text((80, H - 100), t.handle, font=fh, fill=(255, 255, 255))
     d.text((W - 80, H - 100), "スワイプ →", font=fh, fill=(255, 255, 255), anchor="ra")
     return im
 
@@ -219,7 +218,6 @@ def carousel_cover(t: Theme, title: str, subtitle: str, total: int, photo: Path 
     d.text((108, y - 68), subtitle, font=fs, fill=(255, 255, 255), anchor="lm")
     _draw_lines(d, lines, ft, 80, y, (255, 255, 255), 1.35)
     fh = font("regular", 34)
-    d.text((80, H - 100), t.handle, font=fh, fill=(255, 255, 255))
     d.text((W - 80, H - 100), "スワイプ →", font=fh, fill=(255, 255, 255), anchor="ra")
     return im
 
@@ -253,7 +251,6 @@ def carousel_slide(t: Theme, idx: int, total: int, heading: str, points: list[st
         d.rounded_rectangle([86, y + 12, 114, y + 40], radius=8, fill=t.accent)
         y = _draw_lines(d, lines, fp, 150, y, t.text, 1.5) + gap
     fs = font("regular", 30)
-    d.text((80, H - 80), t.handle, font=fs, fill=t.brand)
     d.text((W - 80, H - 80), f"{idx + 1}/{total}", font=fs, fill=t.brand, anchor="ra")
     return im
 
@@ -270,7 +267,7 @@ def carousel_closing(t: Theme, message: str, disclaimer: str, blog_cta: bool = F
         d.rounded_rectangle([100, y, W - 100, y + 130], radius=65, outline=t.brand, width=5)
         d.text((W // 2, y + 65), "詳しくはプロフのリンク（ブログ）へ", font=font("bold", 42), fill=t.brand, anchor="mm")
         y += 170
-    d.text((W // 2, y + 40), f"フォローは {t.handle}", font=font("regular", 42), fill=t.text, anchor="mm")
+    d.text((W // 2, y + 40), "フォローして最新情報をチェック", font=font("regular", 42), fill=t.text, anchor="mm")
     fs = font("regular", 26)
     _draw_lines(d, wrap(d, disclaimer, fs, W - 200), fs, 100, H - 160, (120, 120, 120), 1.4)
     return im
@@ -339,8 +336,6 @@ def reel_overlay(t: Theme, text: str, idx: int, total: int, is_hook: bool, on_me
         d.text((RW // 2, y), ln, font=f, fill=color, anchor="ma")
         y += lh
     d.rectangle([0, RH - 14, int(RW * idx / total), RH], fill=(*t.accent, 255))
-    d.text((RW // 2, RH - 300), t.handle, font=font("bold", 40), fill=(255, 255, 255, 230) if on_media else (*t.accent, 255),
-           anchor="mm", stroke_width=2 if on_media else 0, stroke_fill=(0, 0, 0, 160))
     return im
 
 
