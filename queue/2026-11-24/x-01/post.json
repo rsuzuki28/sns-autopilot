@@ -1,0 +1,20 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-24T07:30:00+09:00",
+  "theme": "最新の改悪・値上げ・キャンペーン速報（ANA減額マイル 本日締切）",
+  "intent": "朝の軽い速報。本日23:59締切のため行動を促し、特典航空券の取り方記事へ誘導",
+  "text": "結論から書きます。\nANA国内線特典航空券の減額マイル、予約・発券は今夜23:59まで。\n\n・ウェブサイト限定\n・減額マイルの利用者向けに、10,000マイルが100名に当たる抽選あり（参加登録が必要）\n\n冬の国内旅行でマイルを使う予定があるなら、朝のうちに空席だけ確認を。",
+  "thread": [
+    "詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/domestic-flight-awards/"
+  ],
+  "blog_url": "https://cc-lifeblog.com/ana%e7%89%b9%e5%85%b8%e8%88%aa%e7%a9%ba%e5%88%b8%e3%81%ae%e5%8f%96%e3%82%8a%e6%96%b9%e3%82%92%e3%82%8f%e3%81%8b%e3%82%8a%e3%82%84%e3%81%99%e3%81%8f%e8%a7%a3%e8%aa%ac%ef%bd%9c%e5%bf%85%e8%a6%81/",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}

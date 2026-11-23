@@ -1,0 +1,87 @@
+{
+  "id": "ig-reel",
+  "platform": "instagram",
+  "kind": "reel",
+  "scheduled_at": "2026-11-24T20:00:00+09:00",
+  "theme": "クレカ比較・選び方（ANAダイナースプレミアム値上げ後、持つ人・見直す人）",
+  "caption": "結論から書きます。\nANAダイナース プレミアムカードは、2026年4月10日以降の口座振替分から年会費198,000円（改定前170,500円、+27,500円）。\n\n▼持つ人\n年間200万円以上をこのカードに集約できる人（ブログの試算で年間約30,000マイル）\n\n▼見直す人\n年間100万円未満の人。一般のANAダイナース（33,000円）やANAダイナースSFC（34,100円）への切り替えを検討\n\n家族会員は無料なので、2人で使えば1人あたり99,000円です。\n私はダイヤ3年目の修行中で、このカードをメインにしています。\n\n試算の詳細は、詳しくはプロフィールのリンクから。\n年会費の見直し時期に読み返せるよう保存、改悪・値上げを淡々と追いたい人はフォローをどうぞ。\n\n📝 もっと詳しい解説はプロフィールのリンク（ブログ）から\n\n※条件・特典は変更される場合があります。最新情報は公式サイトをご確認ください。\n\n#ANAダイナース #ANAダイナースプレミアム #SFC #ANAマイル #陸マイラー #クレジットカード #年会費",
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.diners.co.jp/",
+    "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+  ],
+  "blog_url": "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/",
+  "script": {
+    "theme": "クレカ比較・選び方（ANAダイナースプレミアム値上げ後、持つ人・見直す人）",
+    "hook": "年会費198,000円、まだ持つ？",
+    "hook_material_id": "",
+    "scenes": [
+      {
+        "text": "170,500円→198,000円",
+        "narration": "ANAダイナースプレミアムは、2026年4月10日以降の口座振替分から年会費198,000円です。",
+        "seconds": 4,
+        "material_id": ""
+      },
+      {
+        "text": "家族会員は無料",
+        "narration": "家族会員は無料。2人で使えば1人あたり99,000円です。",
+        "seconds": 3,
+        "material_id": ""
+      },
+      {
+        "text": "年200万円で約30,000マイル",
+        "narration": "ブログの試算では、年間200万円の決済で約30,000マイル。",
+        "seconds": 4,
+        "material_id": ""
+      },
+      {
+        "text": "持つ人：年200万円以上集約",
+        "narration": "年間200万円以上を集約できるなら、値上げ後も合理性はあります。",
+        "seconds": 3,
+        "material_id": ""
+      },
+      {
+        "text": "見直す人：年100万円未満",
+        "narration": "100万円未満なら、一般のANAダイナース33,000円か、ANAダイナースSFC34,100円への切り替えを検討。",
+        "seconds": 4,
+        "material_id": ""
+      },
+      {
+        "text": "ダイヤ3年目の私もメインで使用",
+        "narration": "私はANAダイヤモンド3年目の修行中。このカードはメインで使っています。",
+        "seconds": 3,
+        "material_id": "1jIENWbdat-ypeKirdER1DhT-kE-vZUW8"
+      },
+      {
+        "text": "詳しくはプロフのリンクへ",
+        "narration": "試算の中身はプロフィールのリンクから。",
+        "seconds": 3,
+        "material_id": ""
+      }
+    ],
+    "blog_url": "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/",
+    "caption": "結論から書きます。\nANAダイナース プレミアムカードは、2026年4月10日以降の口座振替分から年会費198,000円（改定前170,500円、+27,500円）。\n\n▼持つ人\n年間200万円以上をこのカードに集約できる人（ブログの試算で年間約30,000マイル）\n\n▼見直す人\n年間100万円未満の人。一般のANAダイナース（33,000円）やANAダイナースSFC（34,100円）への切り替えを検討\n\n家族会員は無料なので、2人で使えば1人あたり99,000円です。\n私はダイヤ3年目の修行中で、このカードをメインにしています。\n\n試算の詳細は、詳しくはプロフィールのリンクから。\n年会費の見直し時期に読み返せるよう保存、改悪・値上げを淡々と追いたい人はフォローをどうぞ。",
+    "hashtags": [
+      "#ANAダイナース",
+      "#ANAダイナースプレミアム",
+      "#SFC",
+      "#ANAマイル",
+      "#陸マイラー",
+      "#クレジットカード",
+      "#年会費"
+    ],
+    "affiliate_card_id": "",
+    "sources": [
+      "https://www.diners.co.jp/",
+      "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+    ]
+  },
+  "media": [
+    "reel.mp4"
+  ],
+  "cover": "cover.jpg",
+  "materials": [
+    "1jIENWbdat-ypeKirdER1DhT-kE-vZUW8"
+  ],
+  "warnings": []
+}

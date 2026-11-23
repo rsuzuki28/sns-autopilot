@@ -1,0 +1,22 @@
+{
+  "id": "x-03",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-24T18:30:00+09:00",
+  "theme": "空港ラウンジ・ポイ活・交換ルート（アメックス→ANAマイル移行）",
+  "intent": "期限1週間の交換ルート情報。使うべき人・待つべき人を分け、詳細記事へ誘導",
+  "text": "アメックスのANAマイル移行「上限なし」キャンペーンは11/30まで。\n\n・2,000ポイント＝1,000マイル\n・対象はメンバーシップ・リワード・プラス登録者\n・参加費不要、通常枠（年40,000マイル）とは別枠\n\n使うべき人：通常枠を使い切った人\n待つべき人：通常枠がまだ残っている人",
+  "thread": [
+    "理由です。\n1マイル＝2円で換算すると、移すポイントが約5,500ポイントを超えるなら、参加費（年5,500円）を払って1ポイント＝1マイルで移すほうが得。\n\nキャンペーンは通常枠と併用できるので、年40,000マイルの上限を超える分に使うのが基本です。\n\n※11月申込分のマイル積算は12月末の予定です。",
+    "詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.americanexpress.com/ja-jp/rewards/membership-rewards/agency/ANA/移行上限なしキャンペーン/ana1-ncap",
+    "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/"
+  ],
+  "blog_url": "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
