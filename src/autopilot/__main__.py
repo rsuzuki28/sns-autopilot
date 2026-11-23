@@ -18,6 +18,7 @@ def main() -> None:
     p.add_argument("--dry-run", action="store_true")
     sub.add_parser("analytics", help="数値を収集")
     sub.add_parser("materials", help="Googleドライブの素材を取り込む")
+    sub.add_parser("check", help="各サービスへの接続を確認")
     sub.add_parser("report", help="週次レポートと学びを更新")
     pv = sub.add_parser("preview", help="台本JSONから画像/動画だけ作る（APIキー不要の確認用）")
     pv.add_argument("plan_json")
@@ -48,6 +49,9 @@ def main() -> None:
     elif a.cmd == "publish":
         from . import publish
         publish.run(dry_run=a.dry_run)
+    elif a.cmd == "check":
+        from . import check
+        check.run()
     elif a.cmd == "materials":
         from . import materials
         materials.sync()

@@ -1,0 +1,44 @@
+name: 0. 接続チェック
+on:
+  push:
+    branches: [main]
+    paths: [".github/run-now/check"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 接続チェック
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          IG_USER_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: python -m autopilot check 2>&1 | tee run.log
+      - name: 結果を保存（Claudeが読めるように）
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/runlog && cd /tmp/runlog
+          cp "$GITHUB_WORKSPACE/run.log" check.log 2>/dev/null || echo "ログなし" > check.log
+          date -u >> check.log
+          git init -q -b run-logs/check
+          git add . && git -c user.name=sns-autopilot -c user.email=github-actions[bot]@users.noreply.github.com commit -qm "check ${{ github.run_id }}"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" run-logs/check
