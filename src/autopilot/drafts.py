@@ -233,3 +233,34 @@ def _warn_lines(item: dict) -> list[str]:
     if item.get("sources"):
         lines += ["", "出典: " + " / ".join(item["sources"])]
     return lines
+
+
+def build_single_reel(day: date, script: dict, hhmm: str, item_id: str, materials_idx: dict) -> Path:
+    """手動リクエストのリールを1本作る（queue/日付/item_id/）。"""
+    plan = {"x_posts": [], "instagram_carousel": [], "instagram_reel": [script], "notes_for_reviewer": script.get("notes", "")}
+    cfg = load_account()
+    old_time = cfg["schedule"]["instagram"]["time"]
+    tmp_day = QUEUE_DIR / day.isoformat()
+    existing = {p.name for p in tmp_day.iterdir()} if tmp_day.exists() else set()
+    cfg["schedule"]["instagram"]["time"] = hhmm
+    import autopilot.drafts as me
+    orig = me.load_account
+    me.load_account = lambda: cfg
+    try:
+        build(day, plan, script.get("research", ""), materials_idx, None)
+    finally:
+        me.load_account = orig
+    src = tmp_day / "ig-reel"
+    dst = tmp_day / item_id
+    if "ig-reel" in existing:
+        raise RuntimeError("同じ日に自動生成のリールがあります。別の日付を指定してください")
+    if dst.exists():
+        import shutil
+        shutil.rmtree(dst)
+    src.rename(dst)
+    item = json.loads((dst / "post.json").read_text(encoding="utf-8"))
+    item["id"] = item_id
+    (dst / "post.json").write_text(json.dumps(item, ensure_ascii=False, indent=2), encoding="utf-8")
+    (tmp_day / "REVIEW.md").rename(dst / "REVIEW.md")
+    _ = old_time
+    return dst

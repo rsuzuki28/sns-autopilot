@@ -90,3 +90,33 @@ def sheet_append(spreadsheet_id: str, rng: str, rows: list[list]) -> None:
     _ok(session().post(f"{SHEETS}/{spreadsheet_id}/values/{rng}:append",
                        params={"valueInputOption": "USER_ENTERED", "insertDataOption": "INSERT_ROWS"},
                        json={"values": rows}))
+
+
+def upload(path: Path, folder_id: str, mime: str, name: str | None = None) -> dict:
+    """共有ドライブのフォルダにファイルをアップロード（同名があれば上書き）。"""
+    name = name or path.name
+    q = f"'{folder_id}' in parents and name = '{name}' and trashed = false"
+    found = _ok(session().get(f"{DRIVE}/files", params={"q": q, "supportsAllDrives": "true",
+                                                         "includeItemsFromAllDrives": "true", "fields": "files(id)"})).get("files", [])
+    meta = {"name": name} if found else {"name": name, "parents": [folder_id]}
+    files = {"metadata": ("metadata", json.dumps(meta), "application/json; charset=UTF-8"),
+             "file": (name, path.read_bytes(), mime)}
+    if found:
+        url = f"https://www.googleapis.com/upload/drive/v3/files/{found[0]['id']}"
+        r = session().patch(url, params={"uploadType": "multipart", "supportsAllDrives": "true", "fields": "id,webViewLink"}, files=files)
+    else:
+        url = "https://www.googleapis.com/upload/drive/v3/files"
+        r = session().post(url, params={"uploadType": "multipart", "supportsAllDrives": "true", "fields": "id,webViewLink"}, files=files)
+    return _ok(r)
+
+
+def download_by_name(folder_id: str, name: str) -> bytes | None:
+    q = f"'{folder_id}' in parents and name = '{name}' and trashed = false"
+    found = _ok(session().get(f"{DRIVE}/files", params={"q": q, "supportsAllDrives": "true",
+                                                         "includeItemsFromAllDrives": "true", "fields": "files(id)"})).get("files", [])
+    if not found:
+        return None
+    r = session().get(f"{DRIVE}/files/{found[0]['id']}", params={"alt": "media", "supportsAllDrives": "true"})
+    if r.status_code >= 300:
+        raise RuntimeError(f"ダウンロード失敗 {r.status_code}")
+    return r.content

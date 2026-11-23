@@ -19,6 +19,12 @@ def main() -> None:
     sub.add_parser("analytics", help="数値を収集")
     sub.add_parser("materials", help="Googleドライブの素材を取り込む")
     sub.add_parser("check", help="各サービスへの接続を確認")
+    sub.add_parser("sync-materials", help="素材を取り込み、説明を表示")
+    ul = sub.add_parser("upload-log", help="ログを共有ドライブの作業ログフォルダへ")
+    ul.add_argument("file")
+    ul.add_argument("name")
+    rl = sub.add_parser("reel", help="台本JSONからリールを1本作る")
+    rl.add_argument("request_json")
     sub.add_parser("report", help="週次レポートと学びを更新")
     pv = sub.add_parser("preview", help="台本JSONから画像/動画だけ作る（APIキー不要の確認用）")
     pv.add_argument("plan_json")
@@ -49,6 +55,30 @@ def main() -> None:
     elif a.cmd == "publish":
         from . import publish
         publish.run(dry_run=a.dry_run)
+    elif a.cmd == "upload-log":
+        from . import google_api as g
+        folder = load_account()["google"]["work_folder_id"]
+        print(g.upload(Path(a.file), folder, "text/plain", a.name).get("webViewLink"))
+    elif a.cmd == "sync-materials":
+        from . import materials
+        idx = materials.sync(max_new=80)
+        for v in sorted(idx.values(), key=lambda v: (v.get("folder", ""), v["name"])):
+            if not v.get("deleted"):
+                flag = f" ⚠使用禁止({v.get('privacy_reason', '')})" if v.get("privacy_risk") else ""
+                print(f"{v['id']}\t{v['kind']}\t{v.get('folder', '')}/{v['name']}\t{v.get('description', '')}{flag}")
+    elif a.cmd == "reel":
+        from . import drafts, materials
+        req = json.loads(Path(a.request_json).read_text(encoding="utf-8"))
+        idx = materials.load_index()
+        out = drafts.build_single_reel(date.fromisoformat(req["date"]), req["script"], req["time"], req["id"], idx)
+        print(f"完了: {out}")
+        folder = req.get("preview_folder_id") or load_account()["google"].get("preview_folder_id")
+        if folder:  # 確認用にGoogleドライブ（非公開）へ
+            from . import google_api as g
+            for f, mime in (("reel.mp4", "video/mp4"), ("cover.jpg", "image/jpeg"), ("REVIEW.md", "text/plain"),
+                            ("post.json", "text/plain")):
+                r = g.upload(out / f, folder, mime, f"{req['id']}_{f}")
+                print(f"アップロード: {f} → {r.get('webViewLink')}")
     elif a.cmd == "check":
         from . import check
         check.run()

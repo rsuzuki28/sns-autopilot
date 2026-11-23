@@ -103,3 +103,5 @@ google:
   shared_drive_id: "0ACBytRwz_j9oUk9PVA"                 # 共有ドライブ「SNS収益化」
   materials_folder_id: "16SMq3ULP3jznmnrDO3EnGwui185CElsu" # 素材フォルダ
   report_spreadsheet_id: "1byhQedKz748HfNos3DQEqNNjnLJi0Ua13d2v4tlboVs"  # SNS運用レポート
+  work_folder_id: "1j-17oOHWZsc2Cdh_gMR5XSEffe1kP8VS"     # 作業ログ（素材の説明・実行ログ。非公開）
+  preview_folder_id: "1A_ETcH-Dd4DG6IGQW3R-UcdSCgtuQ7Fv"  # 下書きプレビュー（確認用）

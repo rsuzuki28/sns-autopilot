@@ -16,9 +16,9 @@ from PIL import Image, ImageOps
 
 from . import google_api as g
 from . import llm
-from .config import DATA_DIR, ROOT, load_account, now
+from .config import ROOT, load_account, now
 
-INDEX = DATA_DIR / "materials.json"
+INDEX = ROOT / ".cache" / "materials.json"
 CACHE_DIR = ROOT / ".cache" / "materials"
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp"}
 VIDEO_EXT = {".mp4", ".mov", ".m4v"}
@@ -45,12 +45,30 @@ DESCRIBE_SYSTEM = """あなたはSNS運用の素材管理担当です。旅行�
 - text_safe_area: 文字を重ねても被写体を邪魔しにくい位置"""
 
 
+def _index_on_drive() -> str | None:
+    """素材の説明は公開リポジトリに置かず、共有ドライブ（非公開）の作業ログフォルダに保存する。"""
+    return load_account()["google"].get("work_folder_id")
+
+
 def load_index() -> dict:
+    folder = _index_on_drive()
+    if folder and g.available():
+        try:
+            data = g.download_by_name(folder, "materials.json")
+            if data:
+                INDEX.parent.mkdir(parents=True, exist_ok=True)
+                INDEX.write_bytes(data)
+        except Exception as e:
+            print(f"⚠ 素材リストの読み込みに失敗: {e}")
     return json.loads(INDEX.read_text(encoding="utf-8")) if INDEX.exists() else {}
 
 
 def save_index(idx: dict) -> None:
+    INDEX.parent.mkdir(parents=True, exist_ok=True)
     INDEX.write_text(json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
+    folder = _index_on_drive()
+    if folder and g.available():
+        g.upload(INDEX, folder, "application/json", "materials.json")
 
 
 def _kind(name: str, mime: str) -> str | None:
@@ -189,3 +207,4 @@ def mark_used(idx: dict, ids: list[str], post_key: str) -> None:
             idx[i]["used_count"] = idx[i].get("used_count", 0) + 1
             idx[i].setdefault("used_in", []).append(post_key)
     save_index(idx)
+
