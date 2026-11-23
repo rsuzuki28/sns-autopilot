@@ -36,10 +36,18 @@ jobs:
         id: day
         run: |
           D="${{ github.event.inputs.date }}"
-          [ -z "$D" ] && D=$(TZ=Asia/Tokyo date -d tomorrow +%F)
+          if [ -z "$D" ]; then
+            # 翌日から順に、まだ下書き（main の queue/ か drafts/ ブランチ）が無い日を選ぶ（最大2日先）
+            for n in 1 2; do
+              C=$(TZ=Asia/Tokyo date -d "+$n day" +%F)
+              if [ ! -d "queue/$C" ] && [ -z "$(git ls-remote origin "refs/heads/drafts/$C")" ]; then D=$C; break; fi
+            done
+            if [ -z "$D" ]; then echo "2日先まで下書き済みなのでスキップ"; echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+          fi
           echo "date=$D" >> "$GITHUB_OUTPUT"
           echo "mode=$(python -c 'import yaml;print(yaml.safe_load(open("config/account.yaml"))["approval"])')" >> "$GITHUB_OUTPUT"
       - name: リサーチ → 台本 → 画像/動画
+        if: steps.day.outputs.skip != '1'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -47,6 +55,7 @@ jobs:
           REVIEW_MEDIA_BASE: ${{ steps.day.outputs.mode == 'manual' && format('https://github.com/{0}/blob/drafts/{1}/queue/{1}/', github.repository, steps.day.outputs.date) || '' }}
         run: set -o pipefail; python -m autopilot generate --date "${{ steps.day.outputs.date }}" 2>&1 | tee -a run.log
       - name: 保存（承認制ならPull Request、自動ならそのまま公開キューへ）
+        if: steps.day.outputs.skip != '1'
         env:
           GH_TOKEN: ${{ github.token }}
           D: ${{ steps.day.outputs.date }}
