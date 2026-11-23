@@ -1,0 +1,18 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-25T07:30:00+09:00",
+  "theme": "キャンペーン速報｜ANA MallでANAカード払いなら＋2マイル（購入は11/27まで）",
+  "intent": "投稿07:30｜単発ツイート｜素材なし（文字のみ）｜テーマタグ:キャンペーン速報｜CTA:なし（朝の軽め速報）｜冒頭1行に数字「100円＝3マイル」",
+  "text": "100円＝3マイル。購入は11/27まで。\n\nANA MallでANAカード払いにすると、通常の100円1マイルに＋2マイルが上乗せされます。\n・参加登録が必要\n・ボーナス付与は11/28〜30\n\n年末に買う予定の物がある人向けです。\n（11/25 公式ページで確認）",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://anamall.ana.co.jp/shop/campaign/e/eblackfriday-teaser/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
