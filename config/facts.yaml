@@ -22,7 +22,7 @@ cards:
     official_url: "https://www.diners.co.jp/"
     blog_url: "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
     affiliate_url: ""
-    checked: ""
+    checked: "2026-11-23"   # 年会費198,000円をRさん確認
 
   - id: ana-diners
     name: "ANAダイナースカード（一般）"
@@ -101,20 +101,23 @@ programs:
     facts:
       - "取得の流れ: ANAプラチナステータス（年間50,000プレミアムポイント）を取得 → プラチナ達成後にSFCカードへ申し込み"
       - "Rさんは2024年にSFC修行でANAダイヤモンドを達成"
-      - "2026年度をもって、ダイヤモンド・プラチナ・SFC会員へのアップグレードポイントの発行が終了"
-      - "スターアライアンスゴールドとしての権利は2026年以降も継続"
+      - "2026年度をもって、ダイヤモンド・プラチナ・SFC会員へのアップグレードポイントの発行が終了（2026-11-23 Rさん確認）"
+      - "2028年4月からSFCは2種類に: 年間カード決済300万円以上＝SFC PLUS（スターアライアンスゴールド維持）、300万円未満＝SFC LITE（スターアライアンスはシルバー）。判定期間は2026/12/16〜2027/12/15（出典: https://www.ana.co.jp/ja/jp/amc/super-flyers-card/update2026/ 、2026-11-23 Rさん確認）"
       - "修行は早朝便・最終便に偏り、前泊・後泊の宿泊費が隠れた固定費になる（1泊8,000円×10回で8万円）"
+    official_url: "https://www.ana.co.jp/ja/jp/amc/super-flyers-card/update2026/"
     blog_url: "https://cc-lifeblog.com/2026%e5%b9%b45%e6%9c%88%e6%94%b9%e8%a8%82%e3%81%a7%e5%a4%89%e3%82%8f%e3%82%8bsfc%e6%88%a6%e7%95%a5/"
-    checked: ""
+    checked: "2026-11-23"
 
   - id: amex-ana-transfer
     name: "アメックス → ANAマイル移行"
     facts:
       - "通常移行: 1ポイント＝1マイル、年間40,000マイルまで、ANAコース参加費 年5,500円（税込）"
       - "キャンペーン: 2026年10月1日〜11月30日、移行上限なし・参加費不要、2,000ポイント＝1,000マイル。通常枠とは別枠で併用可"
+      - "キャンペーンの対象はメンバーシップ・リワード・プラス登録者。11月申込分のマイル積算は12月末予定（2026-11-23 Rさん確認）"
       - "移行するポイントが約5,500ポイントを超えるなら、参加費を払って通常移行したほうが得（1マイル＝2円換算）"
+    official_url: "https://www.americanexpress.com/ja-jp/rewards/membership-rewards/agency/ANA/移行上限なしキャンペーン/ana1-ncap"
     blog_url: "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/"
-    checked: ""
+    checked: "2026-11-23"
 
 # Rさんの実績（ANAアプリで確認済み）
 achievements:
