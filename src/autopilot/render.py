@@ -45,6 +45,18 @@ except ImportError:  # budouxが無ければ1文字ずつ折り返す
     _PARSER = None
 
 
+def _chunks(para: str) -> list[str]:
+    """改行してよい単位に分ける（句読点・コロンの後ろ＋文節）。"""
+    import re
+    if not para:
+        return []
+    out = []
+    for seg in re.split(r"(?<=[：:、。！？])", para):
+        if seg:
+            out += _PARSER.parse(seg) if _PARSER else list(seg)
+    return out
+
+
 def _char_wrap(draw, text: str, f, max_w: int, cur: str = "") -> tuple[list[str], str]:
     lines = []
     for ch in text:
@@ -60,7 +72,7 @@ def wrap(draw: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
     """日本語を文節単位で折り返す（「知っ／ておく」のような不自然な改行を防ぐ）。"""
     lines: list[str] = []
     for para in text.split("\n"):
-        chunks = _PARSER.parse(para) if _PARSER and para else list(para)
+        chunks = _chunks(para)
         cur = ""
         for ch in chunks:
             if draw.textlength(cur + ch, font=f) <= max_w or not cur:
@@ -88,7 +100,9 @@ def fit(draw, text: str, weight: str, sizes: list[int], max_w: int, max_lines: i
         lines = wrap(draw, text, f, max_w)
         if len(lines) > max_lines:
             continue
-        if all(len(ln) > 2 for ln in lines if ln):
+        chunks_fit = not _PARSER or all(draw.textlength(c, font=f) <= max_w
+                                         for para in text.split("\n") for c in _chunks(para) if c)
+        if chunks_fit and all(len(ln) > 2 for ln in lines if ln):
             return f, lines
         fallback = fallback or (f, lines)
     return fallback or (font(weight, sizes[-1]), wrap(draw, text, font(weight, sizes[-1]), max_w))
