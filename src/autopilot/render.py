@@ -325,7 +325,8 @@ def reel_overlay(t: Theme, text: str, idx: int, total: int, is_hook: bool, on_me
     f, lines = fit(d, text, "bold", [120, 108, 96, 88, 80] if is_hook else [96, 88, 80, 72], RW - 200, 6)
     lh = int(f.size * 1.4)
     block_h = lh * len(lines)
-    y = {"top": 330, "middle": (RH - block_h) // 2 - 60, "bottom": RH - 560 - block_h}.get(area, (RH - block_h) // 2)
+    y = {"top": max(170, 400 - block_h), "middle": (RH - block_h) // 2 - 60,
+         "bottom": RH - 560 - block_h}.get(area, (RH - block_h) // 2)
     if on_media:
         pad = 50
         widest = max(d.textlength(ln, font=f) for ln in lines)
@@ -343,10 +344,35 @@ def reel_overlay(t: Theme, text: str, idx: int, total: int, is_hook: bool, on_me
     return im
 
 
+def reel_fit_frame(photo: Path, out: Path) -> Path:
+    """横長・正方形の写真を、切らずに全体を見せる縦長フレームにする（背景はぼかした同じ写真）。"""
+    from PIL import ImageFilter
+    im = ImageOps.exif_transpose(Image.open(photo)).convert("RGB")
+    bg = ImageOps.fit(im, (RW, RH), method=Image.Resampling.LANCZOS)
+    bg = bg.filter(ImageFilter.GaussianBlur(40))
+    bg = Image.blend(bg, Image.new("RGB", (RW, RH), (10, 15, 30)), 0.45)
+    w = RW
+    h = int(im.height * w / im.width)
+    if h > RH * 0.62:  # 縦長寄りなら高さで合わせる
+        h = int(RH * 0.62)
+        w = int(im.width * h / im.height)
+    fg = im.resize((w, h), Image.Resampling.LANCZOS)
+    y = int(RH * 0.56 - h / 2)
+    bg.paste(fg, ((RW - w) // 2, y))
+    bg.save(out, "JPEG", quality=92)
+    return out
+
+
+def _is_portrait(photo: Path) -> bool:
+    w, h = ImageOps.exif_transpose(Image.open(photo)).size
+    return h / max(w, 1) >= 1.6
+
+
 ENC = ["-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-r", str(FPS)]
 
 
-def _segment(bg: tuple[Path, str] | None, overlay: Path, plain: Path, secs: float, out: Path, zoom_in: bool) -> None:
+def _segment(bg: tuple[Path, str] | None, overlay: Path, plain: Path, secs: float, out: Path, zoom_in: bool,
+             zoom_max: float = 1.12) -> None:
     """1シーン分の無音mp4を作る（背景: 動画/写真/無地 + 文字の重ね合わせ）。"""
     fill = f"scale={RW}:{RH}:force_original_aspect_ratio=increase,crop={RW}:{RH},setsar=1"
     if bg and bg[1] == "video":
@@ -354,7 +380,9 @@ def _segment(bg: tuple[Path, str] | None, overlay: Path, plain: Path, secs: floa
         vf = f"[0:v]{fill},fps={FPS}[b]"
     elif bg and bg[1] == "image":
         frames = int(secs * FPS)
-        z = "min(zoom+0.0009,1.12)" if zoom_in else "if(eq(on,0),1.12,max(zoom-0.0009,1.0))"
+        step = (zoom_max - 1.0) / max(frames, 1)
+        z = (f"min(zoom+{step:.5f},{zoom_max})" if zoom_in
+             else f"if(eq(on,0),{zoom_max},max(zoom-{step:.5f},1.0))")
         inputs = ["-loop", "1", "-t", f"{secs}", "-i", str(bg[0])]
         vf = (f"[0:v]scale={RW * 2}:{RH * 2}:force_original_aspect_ratio=increase,crop={RW * 2}:{RH * 2},"
               f"zoompan=z='{z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={RW}x{RH}:fps={FPS},setsar=1[b]")
@@ -384,12 +412,19 @@ def render_reel(item: dict, design: dict, out_dir: Path, resolve: Resolver = _no
             if r and r[1] == "video":  # 動画が短ければその長さに合わせる
                 secs = min(secs, max(1.5, _probe_duration(r[0]) - 0.4))
             durations.append(secs)
+            area = r[2] if r else "middle"
+            bg = (r[0], r[1]) if r else None
+            zoom_max = 1.12
+            if r and r[1] == "image" and not _is_portrait(r[0]):
+                # 横長の写真は切らずに全体を見せ、文字は上に置く。動きも控えめに
+                bg = (reel_fit_frame(r[0], tmp / f"fit{i:02d}.jpg"), "image")
+                area, zoom_max = "top", 1.04
             ov = tmp / f"ov{i:02d}.png"
-            reel_overlay(t, s["text"], i + 1, total, i == 0, bool(r), r[2] if r else "middle").save(ov)
+            reel_overlay(t, s["text"], i + 1, total, i == 0, bool(r), area).save(ov)
             plain = tmp / f"bg{i:02d}.png"
             reel_plain(t, s["text"], i == 0).save(plain)
             seg = tmp / f"s{i:02d}.mp4"
-            _segment((r[0], r[1]) if r else None, ov, plain, secs, seg, zoom_in=i % 2 == 0)
+            _segment(bg, ov, plain, secs, seg, zoom_in=i % 2 == 0, zoom_max=zoom_max)
             segs.append(seg)
         (tmp / "list.txt").write_text("\n".join(f"file '{p}'" for p in segs))
         duration = sum(durations)
