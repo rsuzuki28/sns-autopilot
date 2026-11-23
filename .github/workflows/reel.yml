@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: write-main
+  cancel-in-progress: false
 
 jobs:
   reel:
@@ -25,6 +29,17 @@ jobs:
       - run: pip install -r requirements.txt
       - name: リールを作って共有ドライブ（非公開）にプレビューを置く
         run: set -o pipefail; python -m autopilot reel requests/reel.json 2>&1 | tee run.log
+      - name: 承認済みなら投稿キューに入れる（approved が true のとき）
+        run: |
+          if python -c 'import json,sys;sys.exit(0 if json.load(open("requests/reel.json")).get("approved") else 1)'; then
+            git config user.name "sns-autopilot"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add queue
+            git commit -m "リールを予約: $(python -c 'import json;r=json.load(open("requests/reel.json"));print(r["id"], r["date"], r["time"])')"
+            git pull --rebase origin main && git push origin HEAD:main
+          else
+            echo "未承認のためプレビューのみ"
+          fi
       - name: ログを共有ドライブへ
         if: always()
         run: python -m autopilot upload-log run.log reel.log || true
