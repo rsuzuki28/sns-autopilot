@@ -38,15 +38,41 @@ def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
 NO_LINE_START = set("、。，．・：；？！ー）」』】〕ゝゞ々ぁぃぅぇぉっゃゅょァィゥェォッャュョ")
 
 
+try:
+    import budoux
+    _PARSER = budoux.load_default_japanese_parser()
+except ImportError:  # budouxが無ければ1文字ずつ折り返す
+    _PARSER = None
+
+
+def _char_wrap(draw, text: str, f, max_w: int, cur: str = "") -> tuple[list[str], str]:
+    lines = []
+    for ch in text:
+        if draw.textlength(cur + ch, font=f) <= max_w or not cur or ch in NO_LINE_START:
+            cur += ch
+        else:
+            lines.append(cur)
+            cur = ch
+    return lines, cur
+
+
 def wrap(draw: ImageDraw.ImageDraw, text: str, f, max_w: int) -> list[str]:
+    """日本語を文節単位で折り返す（「知っ／ておく」のような不自然な改行を防ぐ）。"""
     lines: list[str] = []
     for para in text.split("\n"):
+        chunks = _PARSER.parse(para) if _PARSER and para else list(para)
         cur = ""
-        for ch in para:
+        for ch in chunks:
             if draw.textlength(cur + ch, font=f) <= max_w or not cur:
-                cur += ch
-            elif ch in NO_LINE_START:  # 禁則処理（行頭に句読点を置かない）
-                cur += ch
+                if draw.textlength(ch, font=f) > max_w:  # 1文節が1行に収まらない
+                    more, cur = _char_wrap(draw, ch, f, max_w, cur)
+                    lines += more
+                else:
+                    cur += ch
+            elif ch[0] in NO_LINE_START and draw.textlength(cur + ch[0], font=f) <= max_w * 1.05:
+                cur += ch[0]
+                lines.append(cur)
+                cur = ch[1:]
             else:
                 lines.append(cur)
                 cur = ch
@@ -120,7 +146,49 @@ def _darken(im: Image.Image, mask: Image.Image, color=(8, 18, 40)) -> Image.Imag
 W, H = 1080, 1350
 
 
+def _is_screenshot(path: Path) -> bool:
+    """スマホのスクショ（縦長）かどうか。スクショは全面に敷かず、枠つきで見せる。"""
+    w, h = ImageOps.exif_transpose(Image.open(path)).size
+    return h / max(w, 1) > 1.8
+
+
+def _phone_inset(path: Path, height: int) -> Image.Image:
+    im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
+    w = int(im.width * height / im.height)
+    im = im.resize((w, height), Image.Resampling.LANCZOS)
+    mask = Image.new("L", im.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, height - 1], radius=36, fill=255)
+    frame = Image.new("RGBA", (w + 24, height + 24), (255, 255, 255, 255))
+    fmask = Image.new("L", frame.size, 0)
+    ImageDraw.Draw(fmask).rounded_rectangle([0, 0, frame.width - 1, frame.height - 1], radius=46, fill=255)
+    frame.putalpha(fmask)
+    frame.paste(im, (12, 12), mask)
+    return frame
+
+
+def carousel_cover_screenshot(t: Theme, title: str, subtitle: str, photo: Path) -> Image.Image:
+    im = Image.new("RGB", (W, H), t.brand)
+    d = ImageDraw.Draw(im)
+    phone = _phone_inset(photo, 640)
+    im.paste(phone, ((W - phone.width) // 2, 70), phone)
+    d = ImageDraw.Draw(im)
+    fs = font("bold", 40)
+    sw = int(d.textlength(subtitle, font=fs)) + 56
+    y = 70 + phone.height + 60
+    d.rounded_rectangle([80, y, 80 + sw, y + 64], radius=32, fill=t.accent)
+    d.text((108, y + 32), subtitle, font=fs, fill=(255, 255, 255), anchor="lm")
+    ft, lines = fit(d, title, "bold", [96, 88, 80, 72, 64], W - 160, 3)
+    _draw_lines(d, lines, ft, 80, y + 100, (255, 255, 255), 1.3)
+    d.rectangle([0, H - 24, W, H], fill=t.accent)
+    fh = font("regular", 34)
+    d.text((80, H - 100), t.handle, font=fh, fill=(255, 255, 255))
+    d.text((W - 80, H - 100), "スワイプ →", font=fh, fill=(255, 255, 255), anchor="ra")
+    return im
+
+
 def carousel_cover(t: Theme, title: str, subtitle: str, total: int, photo: Path | None = None) -> Image.Image:
+    if photo and _is_screenshot(photo):
+        return carousel_cover_screenshot(t, title, subtitle, photo)
     if photo:
         im = _darken(_photo(photo, (W, H)), _gradient((W, H), 40, 225, start=0.25))
     else:
@@ -145,9 +213,14 @@ def carousel_cover(t: Theme, title: str, subtitle: str, total: int, photo: Path 
 def carousel_slide(t: Theme, idx: int, total: int, heading: str, points: list[str], photo: Path | None = None) -> Image.Image:
     im = Image.new("RGB", (W, H), t.bg)
     top = 0
-    if photo:  # 上半分に写真
+    if photo:  # 上半分に写真（スクショは枠つきで中央に）
         ph_h = 560
-        im.paste(_photo(photo, (W, ph_h)), (0, 0))
+        if _is_screenshot(photo):
+            ImageDraw.Draw(im).rectangle([0, 0, W, ph_h], fill=(226, 232, 243))
+            phone = _phone_inset(photo, ph_h - 60)
+            im.paste(phone, ((W - phone.width) // 2, 30), phone)
+        else:
+            im.paste(_photo(photo, (W, ph_h)), (0, 0))
         top = ph_h
     d = ImageDraw.Draw(im)
     band_h = 170
