@@ -38,6 +38,23 @@ def ng_hits(text: str, ng_words: list[str]) -> list[str]:
     return [w for w in ng_words if w in text]
 
 
+def privacy_hits(text: str, cfg: dict) -> list[str]:
+    """自分のマイル残高など、出してはいけない情報の表記を返す。"""
+    pats = (cfg.get("privacy") or {}).get("forbidden_patterns", [])
+    t = unicodedata.normalize("NFKC", text)
+    return [m.group(0) for p in pats for m in re.finditer(p, t)]
+
+
+def blocked_material(entry: dict | None, mid: str, cfg: dict) -> bool:
+    pv = cfg.get("privacy") or {}
+    if mid in pv.get("blocked_material_ids", []):
+        return True
+    if not entry:
+        return False
+    desc = entry.get("description", "") + " " + " ".join(entry.get("tags", []))
+    return any(k in desc for k in pv.get("blocked_material_keywords", []))
+
+
 def add_pr_label_x(text: str, label: str) -> str:
     return text if text.startswith(label) else f"{label}{text}"
 

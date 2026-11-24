@@ -33,6 +33,9 @@ def build(day: date, plan: dict, research_notes: str, materials_idx: dict | None
         e = materials_idx.get(mid)
         if not e or e.get("deleted") or e.get("privacy_risk") or e["kind"] not in ("image", "video"):
             return None
+        if cp.blocked_material(e, mid, cfg):
+            print(f"⚠ 非公開の素材なので使いません {mid}")
+            return None
         try:
             from . import materials
             return materials.ensure_local(e), e["kind"], e.get("text_safe_area", "middle")
@@ -63,6 +66,8 @@ def build(day: date, plan: dict, research_notes: str, materials_idx: dict | None
         warnings = []
         if (nums := cp.unverified_numbers(all_text, reference)):
             warnings.append("ファクト集・リサーチで確認できない数字: " + ", ".join(nums))
+        if (pv := cp.privacy_hits(all_text, cfg)):
+            warnings.append("🚫 非公開情報（マイル残高など）: " + ", ".join(pv) + " → このままでは投稿されません。削除してください")
         if (ng := cp.ng_hits(all_text, comp["ng_words"])):
             warnings.append("NGワード: " + ", ".join(ng))
         cid = item.get("affiliate_card_id")

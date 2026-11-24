@@ -1,7 +1,74 @@
 {
-  "updated_at": "2026-11-23T16:55:57.764409+09:00",
-  "posts": [],
-  "errors": [
-    "x account: 401 Client Error: Unauthorized for url: https://api.x.com/2/users/me?user.fields=public_metrics"
-  ]
+  "updated_at": "2026-11-24T10:52:51.127566+09:00",
+  "posts": [
+    {
+      "key": "2026-11-23/x-03",
+      "platform": "x",
+      "kind": "post",
+      "remote_id": "2124801344188084319",
+      "posted_at": "2026-11-23T18:44:55.370658+09:00",
+      "theme": "クレカ比較・選び方（ANAダイナース プレミアム値上げ後の判断）",
+      "intent": "保有者として値上げを隠さず伝え、決済額で残す人・切り替える人を分ける",
+      "summary": "結論から書きます。\n私のメインカード、ANAダイナース プレミアムは年会費198,000円に（+27,500円）。\n\n残す目安\n・年200万円以上を集約（約30,000マイルの試算）\n・家族会員無料を使う（2人なら1人99,000円）\n\n年100万円未満なら、一般（33,000円）かSFC（34,100円）への切替を検討。",
+      "blog_url": "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/",
+      "materials": [],
+      "url": "https://x.com/i/web/status/2124801344188084319",
+      "thread_ids": [
+        "2124801357786030148"
+      ],
+      "metrics": {
+        "bookmark_count": 0,
+        "impression_count": 52,
+        "like_count": 0,
+        "quote_count": 0,
+        "reply_count": 1,
+        "retweet_count": 0
+      },
+      "score": 38.51
+    },
+    {
+      "key": "2026-11-23/x-04",
+      "platform": "x",
+      "kind": "post",
+      "remote_id": "2124843563943182771",
+      "posted_at": "2026-11-23T21:32:41.381967+09:00",
+      "theme": "最新キャンペーン速報（ANAとJALのブラックフライデー特典航空券比較）",
+      "intent": "夜の保存されやすい比較まとめ。ANA・JAL両方のマイラーに届く切り口",
+      "summary": "保存版｜ブラックフライデーの特典航空券、ANAとJALの違い\n\nANA\n・国内線全路線＋国際線36路線が減額\n・発券は11/24 23:59まで\n\nJAL\n・対象の国際線が減額、ホノルル片道14,000マイルから\n・申込は11/30まで\n\n締切の早いANAから先に確認を。",
+      "blog_url": "https://cc-lifeblog.com/ana-mile-award-ticket-guide-2026/",
+      "materials": [],
+      "url": "https://x.com/i/web/status/2124843563943182771",
+      "thread_ids": [
+        "2124843577620717889"
+      ],
+      "metrics": {
+        "bookmark_count": 0,
+        "impression_count": 42,
+        "like_count": 0,
+        "quote_count": 0,
+        "reply_count": 1,
+        "retweet_count": 0
+      },
+      "score": 47.66
+    },
+    {
+      "key": "2026-11-23/ig-carousel",
+      "platform": "instagram",
+      "kind": "carousel",
+      "remote_id": "18017683581004181",
+      "posted_at": "2026-11-23T21:08:23.219682+09:00",
+      "theme": "ANAマイル・SFC・ダイヤ修行（2026年にSFC修行を始める前の整理）",
+      "intent": "",
+      "summary": "結論から書きます。\nSFC修行を始めるなら、「変わること」と「隠れた費用」を先に把握しておくのがおすすめです。\n\n・2026年度をもってアップグレードポイントの発行が終了\n・2028年4月からSFCは2種類に。年間決済300万円以上はSFC PLUS（スターアライアンスゴールド維持）、300万円未満はSFC LITE（スターアライアンスはシルバー）。判定期間は2026/12/16〜2027/12/",
+      "blog_url": "https://cc-lifeblog.com/2026%e5%b9%b45%e6%9c%88%e6%94%b9%e8%a8%82%e3%81%a7%e5%a4%89%e3%82%8f%e3%82%8bsfc%e6%88%a6%e7%95%a5/",
+      "materials": [
+        "1jIENWbdat-ypeKirdER1DhT-kE-vZUW8"
+      ],
+      "url": "https://www.instagram.com/p/DgFWDRBDne0/",
+      "permalink": "https://www.instagram.com/p/DgFWDRBDne0/",
+      "metrics": {},
+      "score": 0.0
+    }
+  ],
+  "errors": []
 }

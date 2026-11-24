@@ -5,6 +5,7 @@ import json
 import os
 from datetime import datetime, timedelta
 
+from . import compliance as cp
 from . import platforms as pf
 from .config import POSTED_LOG, QUEUE_DIR, append_jsonl, load_account, now, read_jsonl
 
@@ -33,6 +34,13 @@ def run(dry_run: bool = False) -> int:
     for key, folder, item in due_items(cfg):
         summary = item.get("text") or item.get("caption", "")
         print(f"→ {key} ({item['platform']}/{item['kind']})")
+        texts = [item.get("text", ""), *item.get("thread", []), item.get("caption", "")]
+        if (pv := cp.privacy_hits("\n".join(texts), cfg)) or any(cp.blocked_material(None, m, cfg) for m in item.get("materials", [])):
+            msg = f"非公開情報が含まれるので投稿を止めました: {pv or item.get('materials')}"
+            print(f"  ✗ {msg}")
+            if not dry_run:
+                append_jsonl(POSTED_LOG.with_name("errors.jsonl"), {"key": key, "at": now(cfg).isoformat(), "error": msg})
+            continue
         if dry_run:
             continue
         try:
