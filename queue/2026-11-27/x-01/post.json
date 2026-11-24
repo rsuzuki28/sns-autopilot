@@ -1,0 +1,19 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-27T07:30:00+09:00",
+  "theme": "【キャンペーン速報】ANAにキュン！ブラックフライデー特別版（11/28〜30）の前日リマインド",
+  "intent": "投稿07:30／形式:単発テキスト／素材:なし／テーマタグ:キャンペーン速報／CTA:なし（朝は軽め）／ねらい:明日0時開始の前日リマインド。減額マイル終了との混同を防ぐ",
+  "text": "明日11/28〜30は「ANAにキュン！」のブラックフライデー特別版。\n\nANAブラフラ（〜11/30 23:59）の他の企画\n・海外ツアー最大150,000円分OFFクーポン\n・海外ホテルのみ予約でマイル3倍\n・公式通販は条件達成でマイル最大20倍\n\n※特典航空券の減額マイルは11/24で終了済み",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.anahd.co.jp/group/pr/202611/20261116-2.html",
+    "https://www.ana.co.jp/ja/jp/mycampaign/discount-mile-2026-11/domestic-flight-awards/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
