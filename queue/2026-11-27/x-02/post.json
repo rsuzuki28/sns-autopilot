@@ -1,0 +1,18 @@
+{
+  "id": "x-02",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-27T12:15:00+09:00",
+  "theme": "【初心者向け基礎】SFC PLUS/LITEの判定期間まであと19日",
+  "intent": "投稿12:15／形式:単発テキスト／素材:なし／テーマタグ:初心者向け基礎／CTA:なし（同日のIGカルーセルで深掘り）／ねらい:判定開始日の周知",
+  "text": "SFCの判定期間は、あと19日で始まります。\n\n・期間：2026/12/16〜2027/12/15\n・年間カード決済300万円以上→SFC PLUS\n・300万円未満→SFC LITE\n・切り替わりは2028年4月\n\nメインカードを1枚に寄せるなら、年内に決めておくと迷いません。\n（ANA公式・11/23確認）",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/amc/super-flyers-card/update2026/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
