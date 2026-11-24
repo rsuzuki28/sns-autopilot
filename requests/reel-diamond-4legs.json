@@ -1,0 +1,84 @@
+{
+  "id": "reel-diamond-4legs",
+  "date": "2026-11-25",
+  "time": "12:30",
+  "script": {
+    "theme": "ANAマイル・SFC・ダイヤ修行",
+    "hook": "1日で飛行機4回。\n機内食も4回出てきた",
+    "hook_material_id": "1_MkRdF_6k3wRpWMUP_Qaotm54-obYwLo",
+    "scenes": [
+      {
+        "text": "ダイヤ修行の1日\n羽田→石垣→羽田→那覇→羽田",
+        "narration": "",
+        "seconds": 3,
+        "material_id": "1JhtZQoC0KQTM_3PiEQYiFSLf_ftvIZ93"
+      },
+      {
+        "text": "出発前は\nANAスイートラウンジ",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1-_WaRfSiu92zXL4R4rVu2s_T_HrCpp9E"
+      },
+      {
+        "text": "席はプレミアムクラス",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1Gy6GY18KxaWKV7RABPu_mEJQFgNIa8FD"
+      },
+      {
+        "text": "1食目\n朝はサンドイッチ",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1P4aXcpEA52UMm48ayo67TcoioCygv6ly"
+      },
+      {
+        "text": "2食目\n鮭ご飯といなり寿司",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1_vNyfQyBhINF8zz_bIWjcuMzIMTZwVIq"
+      },
+      {
+        "text": "3食目\n雑穀ご飯と煮物の和食",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "123fGEsRWvgsnSiSeHkmJ1mgnSRaAd3zc"
+      },
+      {
+        "text": "4食目\n那覇発は紅芋コロッケ入り",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1W8bcGv1BPpOr5wmAFFzdzxX7N0eOZ40k"
+      },
+      {
+        "text": "20時発の便で\n羽田へ戻って終了",
+        "narration": "",
+        "seconds": 2.5,
+        "material_id": "1SF-hGEEq3md-TudZFptKR-QzFwznSgkz"
+      },
+      {
+        "text": "修行のルートと費用は\nブログにまとめました",
+        "narration": "",
+        "seconds": 3,
+        "material_id": "15Dg29qn5Ze6w27nxJ-1C-zQXPvDmppMU"
+      }
+    ],
+    "caption": "ダイヤ修行の1日。\n羽田→石垣→羽田→那覇→羽田の4レグで、機内食も4回いただきました。\n\n・スタートはダイヤモンド会員専用の保安検査場から\n・出発前はANAスイートラウンジ\n・プレミアムクラスの機内食は、朝のサンドイッチから和食まで4食\n・那覇発は紅芋コロッケなど沖縄らしいメニュー\n\n修行の具体的なルートと費用は、ブログにまとめています。\n\n修行を考えている人は、保存して計画の参考にしてください。",
+    "hashtags": [
+      "ANA修行",
+      "SFC修行",
+      "ANAダイヤモンド",
+      "プレミアムクラス",
+      "機内食",
+      "ANAスイートラウンジ",
+      "石垣島",
+      "那覇",
+      "陸マイラー",
+      "マイル"
+    ],
+    "affiliate_card_id": "",
+    "sources": [],
+    "blog_url": "https://cc-lifeblog.com/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab/",
+    "notes": "2026/11/17の修行素材から手動で作成"
+  },
+  "revision": 3
+}
