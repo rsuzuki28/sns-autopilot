@@ -182,8 +182,11 @@ def sync(max_new: int = 40) -> dict:
 
 
 def usable(idx: dict) -> list[dict]:
+    from .compliance import blocked_material
+    cfg = load_account()
     return [v for v in idx.values()
-            if not v.get("deleted") and not v.get("privacy_risk") and v.get("quality") != "poor" and v["kind"] != "audio"]
+            if not v.get("deleted") and not v.get("privacy_risk") and v.get("quality") != "poor" and v["kind"] != "audio"
+            and not blocked_material(v, v["id"], cfg)]
 
 
 def catalog_for_prompt(idx: dict, limit: int = 150) -> str:
