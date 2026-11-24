@@ -16,6 +16,8 @@ def main() -> None:
     g.add_argument("--date", help="対象日 YYYY-MM-DD（省略時は翌日）")
     p = sub.add_parser("publish", help="予約時刻を過ぎた投稿を公開")
     p.add_argument("--dry-run", action="store_true")
+    rb = sub.add_parser("rebuild", help="queue/日付/plan.json を手直しした後、画像・動画だけ作り直す（リサーチ・台本作成はしない）")
+    rb.add_argument("--date", required=True)
     sub.add_parser("analytics", help="数値を収集")
     sub.add_parser("materials", help="Googleドライブの素材を取り込む")
     sub.add_parser("check", help="各サービスへの接続を確認")
@@ -52,6 +54,21 @@ def main() -> None:
         out = drafts.build(day, plan, notes, idx, posts)
         (out / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"完了: {out}")
+    elif a.cmd == "rebuild":
+        import shutil
+        from . import blog, drafts, materials
+        from .config import QUEUE_DIR, RESEARCH_DIR
+        day = date.fromisoformat(a.date)
+        day_dir = QUEUE_DIR / day.isoformat()
+        plan = json.loads((day_dir / "plan.json").read_text(encoding="utf-8"))
+        rp = RESEARCH_DIR / f"{day.isoformat()}.md"
+        notes = rp.read_text(encoding="utf-8") if rp.exists() else ""
+        for d in day_dir.iterdir():  # 自動生成分だけ消して作り直す
+            if d.is_dir() and (d.name.startswith("x-") or d.name in ("ig-carousel", "ig-reel")):
+                shutil.rmtree(d)
+        out = drafts.build(day, plan, notes, materials.load_index(), blog.load())
+        (out / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"作り直し完了: {out}")
     elif a.cmd == "publish":
         from . import publish
         publish.run(dry_run=a.dry_run)

@@ -1,84 +1,73 @@
 {
-  "id": "reel-diamond-4legs",
-  "date": "2026-11-25",
-  "time": "12:30",
+  "id": "ig-reel-fixed",
+  "date": "2026-11-24",
+  "time": "20:00",
+  "revision": 1,
+  "approved": false,
+  "note": "11/24のリールから、ANAアプリ画面（マイル残高）の場面の写真を外した版",
   "script": {
-    "theme": "ANAマイル・SFC・ダイヤ修行",
-    "hook": "1日で飛行機4回。\n機内食も4回出てきた",
-    "hook_material_id": "1_MkRdF_6k3wRpWMUP_Qaotm54-obYwLo",
+    "theme": "クレカ比較・選び方（ANAダイナースプレミアム値上げ後、持つ人・見直す人）",
+    "hook": "年会費198,000円、まだ持つ？",
+    "hook_material_id": "",
     "scenes": [
       {
-        "text": "ダイヤ修行の1日\n羽田→石垣→羽田→那覇→羽田",
-        "narration": "",
+        "text": "170,500円→198,000円",
+        "narration": "ANAダイナースプレミアムは、2026年4月10日以降の口座振替分から年会費198,000円です。",
+        "seconds": 4,
+        "material_id": ""
+      },
+      {
+        "text": "家族会員は無料",
+        "narration": "家族会員は無料。2人で使えば1人あたり99,000円です。",
         "seconds": 3,
-        "material_id": "1JhtZQoC0KQTM_3PiEQYiFSLf_ftvIZ93"
+        "material_id": ""
       },
       {
-        "text": "出発前は\nANAスイートラウンジ",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1-_WaRfSiu92zXL4R4rVu2s_T_HrCpp9E"
+        "text": "年200万円で約30,000マイル",
+        "narration": "ブログの試算では、年間200万円の決済で約30,000マイル。",
+        "seconds": 4,
+        "material_id": ""
       },
       {
-        "text": "席はプレミアムクラス",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1Gy6GY18KxaWKV7RABPu_mEJQFgNIa8FD"
-      },
-      {
-        "text": "1食目\n朝はサンドイッチ",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1P4aXcpEA52UMm48ayo67TcoioCygv6ly"
-      },
-      {
-        "text": "2食目\n鮭ご飯といなり寿司",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1_vNyfQyBhINF8zz_bIWjcuMzIMTZwVIq"
-      },
-      {
-        "text": "3食目\n雑穀ご飯と煮物の和食",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "123fGEsRWvgsnSiSeHkmJ1mgnSRaAd3zc"
-      },
-      {
-        "text": "4食目\n那覇発は紅芋コロッケ入り",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1W8bcGv1BPpOr5wmAFFzdzxX7N0eOZ40k"
-      },
-      {
-        "text": "20時発の便で\n羽田へ戻って終了",
-        "narration": "",
-        "seconds": 2.5,
-        "material_id": "1SF-hGEEq3md-TudZFptKR-QzFwznSgkz"
-      },
-      {
-        "text": "修行のルートと費用は\nブログにまとめました",
-        "narration": "",
+        "text": "持つ人：年200万円以上集約",
+        "narration": "年間200万円以上を集約できるなら、値上げ後も合理性はあります。",
         "seconds": 3,
-        "material_id": "15Dg29qn5Ze6w27nxJ-1C-zQXPvDmppMU"
+        "material_id": ""
+      },
+      {
+        "text": "見直す人：年100万円未満",
+        "narration": "100万円未満なら、一般のANAダイナース33,000円か、ANAダイナースSFC34,100円への切り替えを検討。",
+        "seconds": 4,
+        "material_id": ""
+      },
+      {
+        "text": "ダイヤ3年目の私もメインで使用",
+        "narration": "私はANAダイヤモンド3年目の修行中。このカードはメインで使っています。",
+        "seconds": 3,
+        "material_id": ""
+      },
+      {
+        "text": "詳しくはプロフのリンクへ",
+        "narration": "試算の中身はプロフィールのリンクから。",
+        "seconds": 3,
+        "material_id": ""
       }
     ],
-    "caption": "ダイヤ修行の1日。\n羽田→石垣→羽田→那覇→羽田の4レグで、機内食も4回いただきました。\n\n・スタートはダイヤモンド会員専用の保安検査場から\n・出発前はANAスイートラウンジ\n・プレミアムクラスの機内食は、朝のサンドイッチから和食まで4食\n・那覇発は紅芋コロッケなど沖縄らしいメニュー\n\n修行の具体的なルートと費用は、ブログにまとめています。\n\n修行を考えている人は、保存して計画の参考にしてください。",
+    "blog_url": "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/",
+    "caption": "結論から書きます。\nANAダイナース プレミアムカードは、2026年4月10日以降の口座振替分から年会費198,000円（改定前170,500円、+27,500円）。\n\n▼持つ人\n年間200万円以上をこのカードに集約できる人（ブログの試算で年間約30,000マイル）\n\n▼見直す人\n年間100万円未満の人。一般のANAダイナース（33,000円）やANAダイナースSFC（34,100円）への切り替えを検討\n\n家族会員は無料なので、2人で使えば1人あたり99,000円です。\n私はダイヤ3年目の修行中で、このカードをメインにしています。\n\n試算の詳細は、詳しくはプロフィールのリンクから。\n年会費の見直し時期に読み返せるよう保存、改悪・値上げを淡々と追いたい人はフォローをどうぞ。",
     "hashtags": [
-      "ANA修行",
-      "SFC修行",
-      "ANAダイヤモンド",
-      "プレミアムクラス",
-      "機内食",
-      "ANAスイートラウンジ",
-      "石垣島",
-      "那覇",
-      "陸マイラー",
-      "マイル"
+      "#ANAダイナース",
+      "#ANAダイナースプレミアム",
+      "#SFC",
+      "#ANAマイル",
+      "#陸マイラー",
+      "#クレジットカード",
+      "#年会費"
     ],
     "affiliate_card_id": "",
-    "sources": [],
-    "blog_url": "https://cc-lifeblog.com/%e3%82%bf%e3%82%a4%e3%83%88%e3%83%ab/",
-    "notes": "2026/11/17の修行素材から手動で作成"
-  },
-  "revision": 3
+    "sources": [
+      "https://www.diners.co.jp/",
+      "https://cc-lifeblog.com/ana-diners-annual-fee-revision-2026/"
+    ]
+  }
 }

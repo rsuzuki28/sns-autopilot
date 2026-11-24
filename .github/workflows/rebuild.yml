@@ -1,0 +1,46 @@
+name: 6. 下書きの画像・動画を作り直す
+on:
+  push:
+    branches: ["drafts/**"]
+    paths: [".github/run-now/rebuild"]   # 下書きブランチでこのファイルを更新すると、plan.json から作り直す
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: src
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      - run: pip install -r requirements.txt
+      - name: 作り直す
+        id: day
+        run: |
+          D="${GITHUB_REF_NAME#drafts/}"
+          echo "date=$D" >> "$GITHUB_OUTPUT"
+          export REVIEW_MEDIA_BASE="https://github.com/${{ github.repository }}/blob/${GITHUB_REF_NAME}/queue/$D/"
+          set -o pipefail; python -m autopilot rebuild --date "$D" 2>&1 | tee run.log
+      - name: 保存してPRの説明を更新
+        env:
+          GH_TOKEN: ${{ github.token }}
+          D: ${{ steps.day.outputs.date }}
+        run: |
+          git config user.name "sns-autopilot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add queue
+          git commit -m "下書きを作り直し: $D" || echo "変更なし"
+          git push origin HEAD:"$GITHUB_REF_NAME"
+          gh pr edit "$GITHUB_REF_NAME" --body-file "queue/$D/REVIEW.md" || true
+      - name: ログを共有ドライブへ
+        if: always()
+        run: python -m autopilot upload-log run.log rebuild.log || true
