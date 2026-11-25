@@ -1,0 +1,19 @@
+{
+  "id": "x-03",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-28T18:30:00+09:00",
+  "theme": "自動付帯と利用付帯の違い（ANAアメックス・プレミアムの保険変更を例に）｜テーマタグ: 初心者向け基礎",
+  "intent": "投稿時刻: 18:30｜形式: 単発テキスト｜素材: なし｜テーマタグ: 初心者向け基礎（週1本の基礎解説枠）｜CTA: 保存・フォロー促進｜数値の公式確認日: 2026-11-28（アメックス公式ページ。年会費の金額は公式本文で未確認のため記載しない）｜冒頭1行に数字（11/1）",
+  "text": "11/1から、ANAアメックス・プレミアムの海外旅行傷害保険は利用付帯のみになりました。\n\n【基礎】\n・自動付帯＝持っているだけで対象\n・利用付帯＝旅行代金などをそのカードで払うと対象\n\n年末年始に海外へ行く人は、決済カードと条件を公式で確認を。",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.americanexpress.com/ja-jp/benefits/ana-cards/",
+    "https://www.americanexpress.com/jp/index/offers/Topics/2026/amex-news-026.html"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
