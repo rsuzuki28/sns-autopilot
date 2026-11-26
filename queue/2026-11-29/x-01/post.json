@@ -1,0 +1,22 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-29T07:30:00+09:00",
+  "theme": "マイル旅行実例",
+  "intent": "テーマタグ:マイル旅行実例｜形式:単発ポスト｜投稿07:30（朝の検証枠）｜素材:実写真あり（ANA国内線の和食機内食）｜CTA:ブログ誘導（リンクはリプ欄。utm_source=x&utm_campaign=2026w48）｜狙い:朝は軽く、修行3年目の実体験で信頼感を出す",
+  "text": "1日4区間、機内食4回。\n11/17のダイヤ修行です。\n\n羽田→石垣→羽田→那覇→羽田\n4区間すべてプレミアムクラス。\n\n写真はその日の機内食の1つ。\n日曜の朝は、旅の写真から。",
+  "thread": [
+    "詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+  ],
+  "affiliate_card_id": "",
+  "sources": [],
+  "blog_url": "https://cc-lifeblog.com/ana-diamond-shugyo-2026-pp-record/",
+  "media": [
+    "photo.jpg"
+  ],
+  "materials": [
+    "123fGEsRWvgsnSiSeHkmJ1mgnSRaAd3zc"
+  ],
+  "warnings": []
+}
