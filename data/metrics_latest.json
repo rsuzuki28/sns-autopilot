@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T10:52:51.127566+09:00",
+  "updated_at": "2026-11-26T08:17:18.939989+09:00",
   "posts": [
     {
       "key": "2026-11-23/x-03",
@@ -18,13 +18,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 52,
+        "impression_count": 108,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 38.51
+      "score": 18.63
     },
     {
       "key": "2026-11-23/x-04",
@@ -43,13 +43,94 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 42,
+        "impression_count": 86,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 47.66
+      "score": 23.34
+    },
+    {
+      "key": "2026-11-24/x-02",
+      "platform": "x",
+      "kind": "post",
+      "remote_id": "2125106177868533828",
+      "posted_at": "2026-11-24T14:56:13.470287+09:00",
+      "theme": "最新の改悪・値上げ・キャンペーン速報（アメックス特典終了）",
+      "intent": "昼休みに読める改悪ニュース。上位カードほど削られる逆転を切り口に、保有者の行動（使い切り）を明確にする",
+      "summary": "【改悪】アメックスの一部特典が順次終了（11/4発表）\n\n・レストラン15%割引、カフェコーヒー特典\n→プラチナ以上は2027/1/31で終了\n→グリーン、ゴールド、ゴールド・プリファードは継続\n\n上位カードのほうが削られる逆転です。\nプラチナ保有者は1月末までに使い切る計画を。",
+      "blog_url": "",
+      "materials": [],
+      "url": "https://x.com/i/web/status/2125106177868533828",
+      "thread_ids": [
+        "2125106191680377234"
+      ],
+      "metrics": {
+        "bookmark_count": 0,
+        "impression_count": 66,
+        "like_count": 0,
+        "quote_count": 0,
+        "reply_count": 1,
+        "retweet_count": 0
+      },
+      "score": 30.37
+    },
+    {
+      "key": "2026-11-24/x-03",
+      "platform": "x",
+      "kind": "post",
+      "remote_id": "2125195801458815441",
+      "posted_at": "2026-11-24T20:52:24.667329+09:00",
+      "theme": "空港ラウンジ・ポイ活・交換ルート（アメックス→ANAマイル移行）",
+      "intent": "期限1週間の交換ルート情報。使うべき人・待つべき人を分け、詳細記事へ誘導",
+      "summary": "アメックスのANAマイル移行「上限なし」キャンペーンは11/30まで。\n\n・2,000ポイント＝1,000マイル\n・対象はメンバーシップ・リワード・プラス登録者\n・参加費不要、通常枠（年40,000マイル）とは別枠\n\n使うべき人：通常枠を使い切った人\n待つべき人：通常枠がまだ残っている人",
+      "blog_url": "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/",
+      "materials": [],
+      "url": "https://x.com/i/web/status/2125195801458815441",
+      "thread_ids": [
+        "2125195815216136635",
+        "2125195829095125400"
+      ],
+      "metrics": {
+        "bookmark_count": 0,
+        "impression_count": 17,
+        "like_count": 0,
+        "quote_count": 0,
+        "reply_count": 1,
+        "retweet_count": 0
+      },
+      "score": 117.66
+    },
+    {
+      "key": "2026-11-24/x-04",
+      "platform": "x",
+      "kind": "post",
+      "remote_id": "2125205879561621941",
+      "posted_at": "2026-11-24T21:32:40.863406+09:00",
+      "theme": "最新の改悪・値上げ・キャンペーン速報（ANA・JALブラックフライデーまとめ）",
+      "intent": "夜の保存用まとめ。期限順に並べてブックマーク・保存を狙う",
+      "summary": "【保存用】11/30まで、ANAとJALのブラックフライデーでまだ使える企画まとめ\n\n今夜で終わるANA国内線の減額マイル以外にも、マイル・旅行系の企画は残っています。\n\n期限が早い順にスレッドで。",
+      "blog_url": "https://cc-lifeblog.com/jal-mile-award-ticket-guide-2026/",
+      "materials": [],
+      "url": "https://x.com/i/web/status/2125205879561621941",
+      "thread_ids": [
+        "2125205893558026731",
+        "2125205907453747664",
+        "2125205921542311944",
+        "2125205935505244275",
+        "2125205949438648684",
+        "2125205963305017407"
+      ],
+      "metrics": {
+        "bookmark_count": 0,
+        "impression_count": 68,
+        "like_count": 0,
+        "quote_count": 0,
+        "reply_count": 1,
+        "retweet_count": 0
+      },
+      "score": 29.48
     },
     {
       "key": "2026-11-23/ig-carousel",
