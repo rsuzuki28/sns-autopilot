@@ -16,13 +16,13 @@
   ],
   "metrics": {
    "bookmark_count": 0,
-   "impression_count": 92,
+   "impression_count": 108,
    "like_count": 0,
    "quote_count": 0,
    "reply_count": 1,
    "retweet_count": 0
   },
-  "score": 21.83
+  "score": 18.63
  },
  "2026-11-23/x-04": {
   "key": "2026-11-23/x-04",
@@ -41,13 +41,13 @@
   ],
   "metrics": {
    "bookmark_count": 0,
-   "impression_count": 76,
+   "impression_count": 86,
    "like_count": 0,
    "quote_count": 0,
    "reply_count": 1,
    "retweet_count": 0
   },
-  "score": 26.39
+  "score": 23.34
  },
  "2026-11-23/ig-carousel": {
   "key": "2026-11-23/ig-carousel",
@@ -84,13 +84,13 @@
   ],
   "metrics": {
    "bookmark_count": 0,
-   "impression_count": 43,
+   "impression_count": 66,
    "like_count": 0,
    "quote_count": 0,
    "reply_count": 1,
    "retweet_count": 0
   },
-  "score": 46.55
+  "score": 30.37
  },
  "2026-11-24/x-03": {
   "key": "2026-11-24/x-03",
@@ -110,13 +110,13 @@
   ],
   "metrics": {
    "bookmark_count": 0,
-   "impression_count": 16,
+   "impression_count": 17,
    "like_count": 0,
    "quote_count": 0,
    "reply_count": 1,
    "retweet_count": 0
   },
-  "score": 125.02
+  "score": 117.66
  },
  "2026-11-24/x-04": {
   "key": "2026-11-24/x-04",
@@ -140,12 +140,12 @@
   ],
   "metrics": {
    "bookmark_count": 0,
-   "impression_count": 45,
+   "impression_count": 68,
    "like_count": 0,
    "quote_count": 0,
    "reply_count": 1,
    "retweet_count": 0
   },
-  "score": 44.49
+  "score": 29.48
  }
 }

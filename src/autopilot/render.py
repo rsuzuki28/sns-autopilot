@@ -319,7 +319,7 @@ def reel_overlay(t: Theme, text: str, idx: int, total: int, is_hook: bool, on_me
     """文字・ハンドル・進捗バーを描いた透過PNG。"""
     im = Image.new("RGBA", (RW, RH), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    f, lines = fit(d, text, "bold", [120, 108, 96, 88, 80] if is_hook else [96, 88, 80, 72], RW - 200, 6)
+    f, lines = fit(d, text, "bold", [88, 80, 72, 64] if is_hook else [68, 62, 56, 52], RW - 200, 6)
     lh = int(f.size * 1.4)
     block_h = lh * len(lines)
     y = {"top": max(170, 400 - block_h), "middle": (RH - block_h) // 2 - 60,
