@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T08:17:18.939989+09:00",
+  "updated_at": "2026-11-27T08:16:26.615051+09:00",
   "posts": [
     {
       "key": "2026-11-23/x-03",
@@ -18,13 +18,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 108,
+        "impression_count": 129,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 18.63
+      "score": 15.63
     },
     {
       "key": "2026-11-23/x-04",
@@ -43,13 +43,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 86,
+        "impression_count": 94,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 23.34
+      "score": 21.37
     },
     {
       "key": "2026-11-24/x-02",
@@ -68,13 +68,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 66,
+        "impression_count": 75,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 30.37
+      "score": 26.74
     },
     {
       "key": "2026-11-24/x-03",
@@ -94,13 +94,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 17,
+        "impression_count": 26,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 117.66
+      "score": 76.95
     },
     {
       "key": "2026-11-24/x-04",
@@ -124,13 +124,13 @@
       ],
       "metrics": {
         "bookmark_count": 0,
-        "impression_count": 68,
+        "impression_count": 91,
         "like_count": 0,
         "quote_count": 0,
         "reply_count": 1,
         "retweet_count": 0
       },
-      "score": 29.48
+      "score": 22.07
     },
     {
       "key": "2026-11-23/ig-carousel",
