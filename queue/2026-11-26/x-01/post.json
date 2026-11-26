@@ -1,0 +1,18 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-26T07:30:00+09:00",
+  "theme": "キャンペーン速報｜ANAトクたびマイル再開｜07:30｜単発テキスト｜素材なし",
+  "intent": "朝の軽い速報。期限付きの情報で保存と認知を狙う。CTAなし（朝は軽め）",
+  "text": "12/1（火）まで。\nANA「今週のトクたびマイル」が再開しました。\n\n・予約・発券：11/25〜12/1\n・搭乗：12/2〜12/8\n・10/27から休止→11/24告知分から再開\n\n対象路線と必要マイルは公式で確認を。\n12月第1週の弾丸旅に。",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.ana.co.jp/ja/jp/guide/amc/award/domestic/toku-tabi/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
