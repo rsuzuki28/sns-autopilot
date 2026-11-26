@@ -9,6 +9,20 @@ from pathlib import Path
 from .config import load_account, target_date
 
 
+def _upload_reel_preview(d: Path, prefix: str) -> None:
+    """リールの動画とキャプションを共有ドライブ（非公開）の下書きプレビューへ。スマホで保存してインスタの下書きに。"""
+    from . import google_api as g
+    folder = load_account()["google"].get("preview_folder_id")
+    if not (folder and g.available() and (d / "reel.mp4").exists()):
+        return
+    item = json.loads((d / "post.json").read_text(encoding="utf-8"))
+    (d / "caption.txt").write_text(item["caption"], encoding="utf-8")
+    for f, mime in (("reel.mp4", "video/mp4"), ("caption.txt", "text/plain"), ("cover.jpg", "image/jpeg")):
+        if (d / f).exists():
+            r = g.upload(d / f, folder, mime, f"{prefix}_{f}")
+            print(f"アップロード: {f} → {r.get('webViewLink')}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(prog="autopilot")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -54,6 +68,7 @@ def main() -> None:
         out = drafts.build(day, plan, notes, idx, posts)
         (out / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"完了: {out}")
+        _upload_reel_preview(out / "ig-reel", f"{day.isoformat()}_reel")
     elif a.cmd == "rebuild":
         import shutil
         from . import blog, drafts, materials
@@ -69,6 +84,7 @@ def main() -> None:
         out = drafts.build(day, plan, notes, materials.load_index(), blog.load())
         (out / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"作り直し完了: {out}")
+        _upload_reel_preview(out / "ig-reel", f"{day.isoformat()}_reel")
     elif a.cmd == "publish":
         from . import publish
         publish.run(dry_run=a.dry_run)
