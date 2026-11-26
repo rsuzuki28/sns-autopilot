@@ -1,0 +1,18 @@
+{
+  "id": "x-02",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-29T12:15:00+09:00",
+  "theme": "キャンペーン速報",
+  "intent": "テーマタグ:キャンペーン速報｜形式:単発ポスト｜投稿12:15｜素材:なし（文字のみ）｜CTA:保存・フォロー促進（ブログ誘導なし）｜狙い:アメックス保有者に年末の買い物前の登録を促す",
+  "text": "キャッシュバック上限は各1万円。\n年末の買い物前に、アメックス・オファーの確認を。\n\n・BRIEFING：10%、12/15（火）まで\n・Paul Smith：15%、12/16（水）まで\n\nBRIEFINGは事前登録が先着10万名。\n対象カードと条件は登録画面で確認を。",
+  "thread": [],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.americanexpress.com/ja-jp/campaigns/amex-offers/"
+  ],
+  "blog_url": "",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
