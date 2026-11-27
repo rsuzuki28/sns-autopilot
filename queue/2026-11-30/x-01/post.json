@@ -1,0 +1,20 @@
+{
+  "id": "x-01",
+  "platform": "x",
+  "kind": "post",
+  "scheduled_at": "2026-11-30T07:30:00+09:00",
+  "theme": "キャンペーン速報｜アメックス→ANAマイル『上限なし』移行の最終日と、通常枠との分岐点",
+  "intent": "07:30｜X単発｜テーマタグ: キャンペーン速報｜素材なし（文字のみ）｜CTA: ブログ誘導（リンクはリプ欄、utm_source=x&utm_campaign=2026-w49）｜狙い: 最終日の駆け込み需要。過去投稿は概要紹介だったため、今回は『通常枠とどちらを使うか』の判断基準に絞った",
+  "text": "アメックス→ANAマイル「上限なし」は今日11/30で終了。\n\n・2,000pt＝1,000マイル、参加費不要\n・通常枠とは別枠で併用可\n\n迷ったら\n移行が約5,500ptを超える→参加費5,500円を払って通常移行（1pt＝1マイル）が有利\n※1マイル2円換算、11/23公式確認",
+  "thread": [
+    "詳しい解説はブログにまとめています。プロフィールのリンクからどうぞ"
+  ],
+  "affiliate_card_id": "",
+  "sources": [
+    "https://www.americanexpress.com/ja-jp/rewards/membership-rewards/agency/ANA/移行上限なしキャンペーン/ana1-ncap"
+  ],
+  "blog_url": "https://cc-lifeblog.com/amex-ana-mile-no-cap-campaign-2026/",
+  "media": [],
+  "materials": [],
+  "warnings": []
+}
