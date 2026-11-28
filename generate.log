@@ -1,0 +1,12 @@
+== 素材の取り込み（Googleドライブ）
+素材: 新規 0件 / 合計 28件
+== ブログ記事の取得
+   95記事
+== 2026-12-01 のリサーチ
+== 台本作成
+== 画像・動画の生成
+完了: /home/runner/work/sns-autopilot/sns-autopilot/queue/2026-12-01
+アップロード: reel.mp4 → https://drive.google.com/file/d/1yez936R-mtX2cVWrhx6VWQ8SVJqS5voX/view?usp=drivesdk
+アップロード: caption.txt → https://drive.google.com/file/d/1zbto5wZi1jkGJPrTcEdV9QE2yFxKiMIy/view?usp=drivesdk
+アップロード: cover.jpg → https://drive.google.com/file/d/1bkEjaDi9qV7ufjhf2VV0GW0SPAgibdLB/view?usp=drivesdk
+run: https://github.com/rsuzuki28/sns-autopilot/actions/runs/46178604255
